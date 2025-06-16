@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vagas</title>
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
+
+        <div class="navbar">
+            <div class="navbar-logo"><a href="/">Sistema de Vagas</a></div>
+            <div class="navbar-links">
+                <a href="/cadastro">Cadastre-se</a>
+                <a href="/login">Login</a>
+            </div>
+        </div>
+
+        <div class="conteudo">
+            <h2>Cadastro</h2>
+
+            <h3>Você deseja criar uma conta profissional ou empresa?</h3>
+
+            <button type="button" onclick="mostraForm('profissional')">Profissional</button>
+            <button type="button" onclick="mostraForm('empresa')">Empresa</button>
+
+            <div id="form-profissional" class="formulario">
+                <form th:action="@{/cadastro}" method="post">
+
+                    <label>Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+
+                    <label>Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+                    
+                    <label>Senha:</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+
+            <div id="form-empresa" class="formulario">
+                <form th:action="@{/cadastro}" method="post">
+
+                    <label>Nome da Empresa:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Digite o nome da empresa" required>
+
+                    <label>Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+                    
+                    <label>Senha:</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+
+        </div>
+    </body>
+</html>

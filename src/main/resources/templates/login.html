@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Vagas</title>
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
+
+        <div class="navbar">
+            <div class="navbar-logo"><a href="/">Sistema de Vagas</a></div>
+            <div class="navbar-links">
+                <a href="/login">Login</a>
+            </div>
+        </div>
+
+        <div class="conteudo">
+            <h1>Login</h1>
+            <form th:action="@{/login}" method="post">
+                <label>Email:</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+
+                <label>Senha:</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+                <button type="submit">Entrar</button>
+        </div>
+        
+    </body>
+</html>
