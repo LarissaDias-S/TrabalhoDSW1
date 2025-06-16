@@ -10,8 +10,4 @@ function mostraForm(tipo)
         formProfissional.style.display = "none";
         formEmpresa.style.display = "block";
     }
-
-    window.onload = function() {
-        mostraForm("profissional");
-    }
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head>
+        <meta charset="UTF-8">
+        <title layout:fragment="titulo" th:text="#{title.label}"></title>
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
+
+        <div class="navbar">
+            <div class="navbar-logo"><a href="/" th:text="#{title.label}"></a></div>
+            <div class="navbar-links">
+                <a href="/vagas" th:text="#{link.vagas}"></a>
+                <a href="/cadastro" th:text="#{link.cadastro}"></a>
+                <a href="/login" th:text="#{link.login}"></a>
+            </div>
+        </div>
+
+        <div class="conteudo" layout:fragment="conteudo"></div>
+
+        <script src="/js/script.js"></script>
+    </body>
+</html>
