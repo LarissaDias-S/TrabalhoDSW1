@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Empresas</title>
+</head>
+<body>
+    <h1>Lista de Empresas</h1>
+    <a th:href="@{/admin/empresas/new}">Adicionar Nova Empresa</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CNPJ</th>
+                <th>Email</th>
+                <th>Cidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="empresa : ${empresas}">
+                <td th:text="${empresa.id}"></td>
+                <td th:text="${empresa.nome}"></td>
+                <td th:text="${empresa.cnpj}"></td>
+                <td th:text="${empresa.email}"></td>
+                <td th:text="${empresa.cidade}"></td>
+                <td>
+                    <a th:href="@{/admin/empresas/edit/{id}(id=${empresa.id})}">Editar</a>
+                    <a th:href="@{/admin/empresas/delete/{id}(id=${empresa.id})}" onclick="return confirm('Tem certeza que deseja excluir esta empresa?')">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/dashboard}">Voltar</a>
+</body>
+</html>

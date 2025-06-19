@@ -8,7 +8,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class VagasApplicationConfig 
 {
-   @Bean
+/*   @Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 				.authorizeHttpRequests((auth) -> auth
@@ -16,5 +16,5 @@ public class VagasApplicationConfig
 		);
 
 		return http.build();
-	}
+	}*/
 }
