@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
-    // Spring Data JPA will automatically implement basic CRUD methods
+
 }

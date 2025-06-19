@@ -9,41 +9,41 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize; // For method-level security
 
 @Controller
-@RequestMapping("/admin/empresas") // All paths under here require ADMIN role due to SecurityConfig
+@RequestMapping("/admin/empresas") // Todos os caminhos abaixo precisam do role ADMIN, configurado em SecurityConfig
 public class EmpresaController {
 
     @Autowired
     private EmpresaService empresaService;
 
-    // List all companies (Read)
+    // Listar todas as empresas
     @GetMapping
     public String listEmpresas(Model model) {
         model.addAttribute("empresas", empresaService.findAllEmpresas());
-        return "admin/empresas/list"; // Corresponds to /src/main/resources/templates/admin/empresas/list.html
+        return "admin/empresas/list";
     }
 
-    // Show form to add new company (Create - display form)
+    // Mostrar formulario que adiciona novas empresas
     @GetMapping("/new")
     public String showNewEmpresaForm(Model model) {
         model.addAttribute("empresa", new Empresa());
-        return "admin/empresas/form"; // Corresponds to /src/main/resources/templates/admin/empresas/form.html
+        return "admin/empresas/form";
     }
 
-    // Save new company (Create - submit form)
+    // salvar nova empresa
     @PostMapping("/save")
     public String saveEmpresa(@ModelAttribute("empresa") Empresa empresa) {
         empresaService.saveEmpresa(empresa);
         return "redirect:/admin/empresas"; // Redirect back to the list
     }
 
-    // Show form to edit existing company (Update - display form)
+    //mostrar formulario que edita empresa existente
     @GetMapping("/edit/{id}")
     public String showEditEmpresaForm(@PathVariable Long id, Model model) {
         empresaService.findEmpresaById(id).ifPresent(empresa -> model.addAttribute("empresa", empresa));
         return "admin/empresas/form";
     }
 
-    // Delete company (Delete)
+    // excluir empresa
     @GetMapping("/delete/{id}")
     public String deleteEmpresa(@PathVariable Long id) {
         empresaService.deleteEmpresa(id);

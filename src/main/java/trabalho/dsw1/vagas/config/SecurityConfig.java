@@ -19,8 +19,8 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/public/**", "/login").permitAll()
-                .requestMatchers("/login","/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                .requestMatchers("/public/**", "/login").permitAll() //acesso dessas paginas para todos
+                .requestMatchers("/login","/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()//permitir acesso para todos
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -36,8 +36,8 @@ public class SecurityConfig {
     @Bean // 
     public UserDetailsService userDetailsService() {
         UserDetails admin = User.withUsername("admin@admin.com")
-            .password("{noop}123456") // {noop} for plain text password - DO NOT USE IN PRODUCTION
-            .roles("ADMIN")
+            .password("{noop}123456") // {noop} para senha em texto
+            .roles("ADMIN") //criar essa função para que apenas pessoas ADMIN tenho acesso a CRUD de empresas
             .build();
         return new InMemoryUserDetailsManager(admin); // 
     }

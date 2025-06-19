@@ -17,7 +17,7 @@ public class AdminSeeder implements CommandLineRunner {
         if (adminRepository.findByEmail("admin@admin.com") == null) {
             Admin admin = new Admin();
             admin.setEmail("admin@admin.com");
-            admin.setSenha("123456"); // depois você pode usar BCrypt aqui
+            admin.setSenha("123456");
             adminRepository.save(admin);
         }
     }
