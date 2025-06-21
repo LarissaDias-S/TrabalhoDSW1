@@ -1,7 +1,12 @@
 package trabalho.dsw1.vagas.model;
 
-public class Profissional {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
+@Entity
+
+public class Profissional {
+    @Id
     private String nome;
     private String email;
     private String senha;
