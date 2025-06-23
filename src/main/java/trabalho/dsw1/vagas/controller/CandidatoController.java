@@ -59,7 +59,7 @@ public class CandidatoController {
         }
 
         if (candidatoService.jaCandidatado(profissional, vaga)) {
-            return "redirect:/profissional/dashboard?erro=ja-inscrito";
+            return "redirect:/profissionais/dashboard-profissional?erro=ja-inscrito";
         }
 
         Candidato candidato = new Candidato();

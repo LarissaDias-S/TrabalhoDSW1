@@ -1,31 +1,35 @@
 package trabalho.dsw1.vagas.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
-public class Empresa {
+public class Empresa extends AbstractEntity<Long> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @NotBlank
+    @Column(nullable = false, length = 64, unique = true)
     private String email;
-    private String senha; // In a real app, store hashed password
+
+    @NotBlank
+    @Column(nullable = false, length = 64, unique = true)
+    private String senha; 
+
+    @NotBlank
+    @Column(nullable = false, length = 64, unique = true)
     private String cnpj;
+
+    @NotBlank
+    @Column(nullable = false, length = 64, unique = true)
     private String nome;
+
+    @NotBlank
+    @Column(nullable = false, length = 256, unique = false)
     private String descricao;
+
+    @NotBlank
+    @Column(nullable = false, length = 64, unique = false)
     private String cidade;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -75,16 +79,4 @@ public class Empresa {
         this.cidade = cidade;
     }
 
-    // Opcional: toString() para facilitar o debug
-    @Override
-    public String toString() {
-        return "Empresa{" +
-               "id=" + id +
-               ", email='" + email + '\'' +
-               ", cnpj='" + cnpj + '\'' +
-               ", nome='" + nome + '\'' +
-               ", descricao='" + descricao + '\'' +
-               ", cidade='" + cidade + '\'' +
-               '}';
-    }
 }

@@ -34,7 +34,7 @@ public class DashboardController {
     } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_PROFISSIONAL"))) {
         Profissional profissional = profissionalService.findByEmail(principal.getName());
 
-        List<Vaga> vagasDisponiveis = vagaService.buscarVagasNaoCandidatadas(profissional);
+        List<Vaga> vagasDisponiveis = vagaService.buscarVagasNaoCandidatadasSemData(profissional);
         List<Vaga> vagasInscritas = vagaService.buscarVagasCandidatadas(profissional);
          
 

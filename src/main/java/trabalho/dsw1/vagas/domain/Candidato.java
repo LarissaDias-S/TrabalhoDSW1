@@ -1,5 +1,7 @@
 package trabalho.dsw1.vagas.domain;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,14 +21,24 @@ public class Candidato extends AbstractEntity<Long> {
 
     @Column(nullable = false, columnDefinition = "LONGBLOB")
     private byte[] curriculo;
+
+    @Column(nullable = false, length = 64, unique = false)
+    private String status = "Pendente";
+
+    @Column(length = 256, unique = false)
+    private String linkEntrevista;
+
+    @Column(nullable = true)
+    private LocalDateTime dataHoraEntrevista;
     
     public Candidato() {
     }
 
-    public Candidato(Profissional profissional, Vaga vaga, byte[] curriculo) {
+    public Candidato(Profissional profissional, Vaga vaga, byte[] curriculo, String status) {
         this.profissional = profissional;
         this.vaga = vaga;
         this.curriculo = curriculo;
+        this.status = status;
     }
 
     public Profissional getProfissional() {
@@ -51,6 +63,30 @@ public class Candidato extends AbstractEntity<Long> {
 
     public void setCurriculo(byte[] curriculo) {
         this.curriculo = curriculo;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getLinkEntrevista() {
+        return linkEntrevista;
+    }
+
+    public void setLinkEntrevista(String linkEntrevista) {
+        this.linkEntrevista = linkEntrevista;
+    }
+
+    public LocalDateTime getDataHoraEntrevista() {
+        return dataHoraEntrevista;
+    }
+
+    public void setDataHoraEntrevista(LocalDateTime dataHoraEntrevista) {
+        this.dataHoraEntrevista = dataHoraEntrevista;
     }
 
 }

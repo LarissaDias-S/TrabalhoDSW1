@@ -1,11 +1,13 @@
 package trabalho.dsw1.vagas.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 import trabalho.dsw1.vagas.domain.Profissional;
@@ -29,19 +31,40 @@ public class VagasController {
     }
 
     @GetMapping("/vagas")
-    public String listarVagasPublicamente(Model model, Authentication auth) {
+    public String listarVagasPublicamente(Model model, Authentication auth, @RequestParam(required = false) String cidade) {
 
         List<Vaga> vagas;
+        LocalDate hoje = LocalDate.now();
+        
+        vagas = vagaService.buscarVagasValidas(hoje);        
         
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_PROFISSIONAL"))) {
             Profissional profissional = profissionalService.findByEmail(auth.getName());
-            vagas = vagaService.buscarVagasNaoCandidatadas(profissional);
+            vagas = vagaService.buscarVagasNaoCandidatadas(profissional, hoje);
+        } 
+        
+        if (cidade == null || cidade.isBlank()) {
+            if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_PROFISSIONAL"))) {
+                Profissional profissional = profissionalService.findByEmail(auth.getName());
+                vagas = vagaService.buscarVagasNaoCandidatadas(profissional, hoje);
+            } else {
+                vagas = vagaService.buscarVagasValidas(hoje);
+            }
+            model.addAttribute("cidade", "");
+            vagas = vagaService.buscarVagasValidas(hoje);
         } else {
-            vagas = vagaService.getAllVagas(); // ou outro método para listar todas as vagas para usuários não logados ou empresas
+            if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_PROFISSIONAL"))) {
+                Profissional profissional = profissionalService.findByEmail(auth.getName());
+                vagas = vagaService.findVagasAbertasPorCidade(cidade, profissional, hoje);
+            } else {
+                vagas = vagaService.findVagasAbertasPorCidadeSemLogar(cidade, hoje);
+            }
+            model.addAttribute("cidade", cidade); // pra manter o valor no campo
         }
 
         model.addAttribute("vagasDisponiveis", vagas);
-        return "vagas";
+
+        return "vagas/listagem";
     }
     
 }

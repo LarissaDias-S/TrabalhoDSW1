@@ -37,6 +37,9 @@ public class CadastroController {
             empresa.setNome(form.get("nome"));
             empresa.setEmail(form.get("email"));
             empresa.setSenha(encoder.encode(form.get("senha")));
+            empresa.setCnpj(form.get("cnpj"));
+            empresa.setDescricao(form.get("descricao"));
+            empresa.setCidade(form.get("cidade"));
             empresaRepository.save(empresa);
         } else if ("profissional".equals(tipo)) {
             Profissional profissional = new Profissional();

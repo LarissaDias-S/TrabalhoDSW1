@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Vagas Abertas</title>
+</head>
+<body>
+    <div layout:fragment="conteudo">
+            <div class="conteudo">
+    <h1>Vagas em Aberto</h1>
+
+    <form th:action="@{/vagas}" method="get">
+        <input type="text" name="cidade" placeholder="Filtrar por cidade" th:value="${cidade}">
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <div th:if="${vagasDisponiveis.isEmpty()}">
+        <p>Nenhuma vaga encontrada.</p>
+    </div>
+
+    <div th:unless="${vagasDisponiveis.isEmpty()}">
+        <p>Vagas disponíveis: <span th:text="${#lists.size(vagasDisponiveis)}"></span></p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th th:text="#{vaga.titulo}">Título</th>
+                <th th:text="#{vaga.descricao}">Descrição</th>
+                <th th:text="#{vaga.localizacao}">Localização</th>
+                <th th:text="#{vaga.tipoContrato}">Tipo Contrato</th>
+                <th th:text="#{vaga.salario}">Salário</th>
+                <th th:text="#{vaga.remoto}">Remoto</th>
+                <th th:text="#{vaga.dataLimite}">Data Limite</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vaga: ${vagasDisponiveis}">
+                <td th:text="${vaga.titulo}"></td>
+                <td th:text="${vaga.descricao}"></td>
+                <td th:text="${vaga.localizacao}"></td>
+                <td th:text="${vaga.tipoContrato}"></td>
+                <td th:text="${#numbers.formatDecimal(vaga.salario, 1, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${vaga.remoto} ? #{sim} : #{nao}"></td>
+                <td th:text="${#temporals.format(vaga.dataLimite, 'dd/MM/yyyy')}"></td>
+                <div sec:authorize="hasRole('PROFISSIONAL')">
+                    <form th:action="@{/candidatar}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="vagaId" th:value="${vaga.id}" />
+                        <td><input type="file" name="curriculo" required /></td>
+                        <td><button type="submit" th:text="#{vagas.botao_candidatar}">Candidatar-se</button></td>
+                    </form>
+                </div>
+            </tr>
+            
+        </tbody>
+    </table>
+    </div>
+
+      </div>
+    </div>
+</body>
+</html>

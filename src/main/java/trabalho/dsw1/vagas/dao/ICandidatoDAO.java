@@ -19,5 +19,8 @@ public interface ICandidatoDAO extends CrudRepository<Candidato, Long> {
         
     @Query("SELECT COUNT(c) > 0 FROM Candidato c WHERE c.profissional = :profissional AND c.vaga = :vaga")
     boolean existsByProfissionalAndVaga(Profissional profissional, Vaga vaga);
+
+    @Query("SELECT c FROM Candidato c WHERE c.vaga.id = :vagaId")
+    List<Candidato> findByVagaId(Long vagaId);
     
 }

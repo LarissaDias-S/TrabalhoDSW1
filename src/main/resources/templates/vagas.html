@@ -29,7 +29,6 @@
                     <span th:text="${#temporals.format(vaga.dataLimite, 'dd/MM/yyyy')}">Data Limite</span>
                     <span th:text="${vaga.status}">Status</span>
 
-                    <!-- Somente para usuários com papel "PROFISSIONAL" -->
                     <div sec:authorize="hasRole('PROFISSIONAL')">
                         <form th:action="@{/candidatar}" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="vagaId" th:value="${vaga.id}" />

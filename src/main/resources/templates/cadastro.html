@@ -51,6 +51,15 @@
                         <label th:text="#{register.passwordLabel}">Senha:</label>
                         <input type="password" id="senha" name="senha" th:placeholder="#{register.passwordPlaceholder}" required />
 
+                        <label th:text="#{register.cnpjLabel}">CNPJ:</label>
+                        <input type="text" id="cnpj" name="cnpj" th:placeholder="#{register.cnpjPlaceholder}" required />
+
+                        <label th:text="#{register.cityLabel}">Cidade:</label>
+                        <input type="text" id="cidade" name="cidade" th:placeholder="#{register.cityPlaceholder}" required />
+
+                        <label th:text="#{register.descriptionLabel}">Descrição:</label>
+                        <textarea id="descricao" name="descricao" th:placeholder="#{register.descriptionPlaceholder}" required></textarea>
+
                         <button type="submit" th:text="#{register.submitButton}">Cadastrar</button>
                     </form>
                 </div>

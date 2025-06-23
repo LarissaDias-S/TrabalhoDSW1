@@ -61,11 +61,13 @@ public class ProfissionalController {
             redirectAttributes.addFlashAttribute("erro", "Erro ao salvar o arquivo.");
             return "/vagas/" + id;
         }
+
+        String status = "ATIVO";
         
         // Salvar candidatura
         try {
             // Supondo que exista um construtor Candidato(Profissional, Vaga, String)
-            trabalho.dsw1.vagas.domain.Candidato candidato = new Candidato(profissional, vaga, nomeArquivo.getBytes());
+            trabalho.dsw1.vagas.domain.Candidato candidato = new Candidato(profissional, vaga, nomeArquivo.getBytes(), status);
             candidatoService.save(candidato);
         } catch (IllegalStateException e) {
             redirectAttributes.addFlashAttribute("erro", e.getMessage());
