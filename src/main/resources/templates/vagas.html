@@ -1,13 +1,38 @@
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout}">
 
     <body>
         <div layout:fragment="conteudo" class="conteudo">
-            <h1>Bem-vindo ao Sistema de Vagas</h1>
+            <h2>Vagas Disponíveis</h2>
+
+            <div th:if="${vagasDisponiveis == null or vagasDisponiveis.isEmpty()}">
+                Nenhuma vaga disponível no momento.
+            </div>
+
+            <ul>
+                <li th:each="vaga : ${vagasDisponiveis}">
+                    <span th:text="${vaga.titulo}">Título da Vaga</span> -
+                    <span th:text="${vaga.descricao}">Descrição</span> -
+                    <span th:text="${vaga.salario}">Salário</span> -
+                    <span th:text="${vaga.empresa.nome}">Nome da Empresa</span> -
+                    <span th:text="${vaga.localizacao}">Localização</span> -
+                    <span th:text="${vaga.tipoContrato}">Tipo da Vaga</span> -
+                    <span th:text="${vaga.remoto ? 'Sim' : 'Não'}">Remoto</span>
+
+                    <!-- Somente para usuários com papel "PROFISSIONAL" -->
+                    <div sec:authorize="hasRole('PROFISSIONAL')">
+                        <form th:action="@{/candidatar}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="vagaId" th:value="${vaga.id}" />
+                            <input type="file" name="curriculo" required />
+                            <button type="submit">Candidatar-se</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
         </div>
     </body>
 </html>

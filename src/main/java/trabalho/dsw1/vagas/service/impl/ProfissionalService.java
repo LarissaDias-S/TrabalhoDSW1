@@ -32,4 +32,8 @@ public class ProfissionalService implements IProfissionalService {
     public List<Profissional> findAll() {
         return profissionalDAO.findAll();
     }
+
+    public Profissional findByEmail(String email) {
+        return profissionalDAO.findByEmail(email);
+    }
 }

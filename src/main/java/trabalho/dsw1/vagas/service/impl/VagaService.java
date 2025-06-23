@@ -1,5 +1,6 @@
 package trabalho.dsw1.vagas.service.impl;
 
+import trabalho.dsw1.vagas.domain.Profissional;
 import trabalho.dsw1.vagas.domain.Vaga;
 import java.util.List;
 
@@ -32,6 +33,14 @@ public class VagaService {
 
     public List<Vaga> getAllVagasByEmpresaId(Long empresaId) {
         return vagaDAO.findByEmpresaId(empresaId);
+    }
+
+    public List<Vaga> buscarVagasNaoCandidatadas(Profissional profissional) {
+        return vagaDAO.findVagasNaoCandidatadas(profissional.getId());
+    }
+
+    public List<Vaga> buscarVagasCandidatadas(Profissional profissional) {
+        return vagaDAO.findVagasCandidatadas(profissional.getId());
     }
     
 }

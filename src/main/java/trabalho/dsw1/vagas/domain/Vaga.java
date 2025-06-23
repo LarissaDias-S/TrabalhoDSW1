@@ -22,13 +22,13 @@ public class Vaga extends AbstractEntity<Long> {
     private String localizacao;
 
     @NotBlank
-    @Column(nullable = false, length = 64, unique = true)
+    @Column(nullable = false, length = 64, unique = false)
     private String tipoContrato; 
 
-    @Column(nullable = false, length = 64, unique = true)
+    @Column(nullable = false, length = 64, unique = false)
     private double salario;
 
-    @Column(nullable = false, length = 64, unique = true)
+    @Column(nullable = false, length = 64, unique = false)
     private boolean remoto; 
 
     @ManyToOne(optional = false)

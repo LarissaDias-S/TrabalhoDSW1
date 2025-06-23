@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity"
+      layout:decorate="~{layout}">
+<head>
+    <title layout:fragment="titulo">Dashboard Profissional</title>
+</head>
+<body>
+    <div layout:fragment="conteudo">
+        <h2>Minhas Candidaturas</h2>
+        <div th:if="${vagasInscritas.isEmpty()}">Você ainda não se candidatou a nenhuma vaga.</div>
+        <ul>
+            <li th:each="vaga : ${vagasInscritas}">
+                <span th:text="${vaga.titulo}">Título da Vaga</span> -
+                <span th:text="${vaga.descricao}">Descrição</span> -
+                <span th:text="${vaga.salario}">Salario</span> -
+                <span th:text="${vaga.empresa.nome}">Nome da Empresa</span> -
+                <span th:text="${vaga.localizacao}">Localização</span> -
+                <span th:text="${vaga.tipoContrato}">Tipo da Vaga</span> -
+                <span th:text="${vaga.remoto ? 'Sim' : 'Não'}">Remoto</span> -
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
