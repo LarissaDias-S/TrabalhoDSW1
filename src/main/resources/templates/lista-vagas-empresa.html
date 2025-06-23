@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Minhas Vagas</title>
+</head>
+<body>
+    <div layout:fragment="conteudo">
+
+            <div class="conteudo">
+    <h2>Minhas Vagas</h2>
+
+    <div th:each="vaga : ${vagas}">
+        <p><b th:text="${vaga.descricao}"></b></p>
+        <p>Remuneração: R$ <span th:text="${vaga.remuneracao}"></span></p>
+        <p>Data limite: <span th:text="${vaga.dataLimite}"></span></p>
+            <!-- Botão para avaliar candidaturas dessa vaga -->
+        <a th:href="@{'/vaga/' + ${vaga.id} + '/avaliar'}" class="btn btn-primary">
+        Avaliar Candidaturas
+        </a>
+        
+        <hr>
+    </div>
+    </div>
+    </div>
+</body>
+</html>

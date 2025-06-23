@@ -13,7 +13,7 @@ public class Empresa {
     private Long id;
 
     private String email;
-    private String senha; // In a real app, store hashed password
+    private String senha; 
     private String cnpj;
     private String nome;
     private String descricao;

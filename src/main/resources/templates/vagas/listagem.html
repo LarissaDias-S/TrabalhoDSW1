@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Vagas Abertas</title>
+</head>
+<body>
+    <div layout:fragment="conteudo">
+            <div class="conteudo">
+    <h1>Vagas em Aberto</h1>
+
+    <form th:action="@{/vagas}" method="get">
+        <input type="text" name="cidade" placeholder="Filtrar por cidade" th:value="${cidade}">
+        <button type="submit">Filtrar</button>
+    </form>
+
+    <div th:if="${vagas.isEmpty()}">
+        <p>Nenhuma vaga encontrada.</p>
+    </div>
+
+    <ul>
+        <li th:each="vaga : ${vagas}">
+            <h3 th:text="${vaga.descricao}">Descrição</h3>
+            <p><strong>Empresa:</strong> <span th:text="${vaga.empresa.nome}">Empresa</span></p>
+            <p><strong>Cidade:</strong> <span th:text="${vaga.empresa.cidade}">Cidade</span></p>
+            <p><strong>Remuneração:</strong> R$ <span th:text="${vaga.remuneracao}">0.0</span></p>
+            <p><strong>Data limite:</strong> <span th:text="${vaga.dataLimite}">2025-07-01</span></p>
+        </li>
+    </ul>
+      </div>
+    </div>
+</body>
+</html>
