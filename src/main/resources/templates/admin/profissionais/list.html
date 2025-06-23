@@ -5,18 +5,18 @@
 
 <body>
 <div layout:fragment="conteudo">
-    <h1>Lista de Profissionais</h1>
+    <h1 th:text="#{profissional.lista}">Lista de Profissionais</h1>
 
-    <a href="/admin/profissionais/new">Novo Profissional</a>
+    <a href="/admin/profissionais/new" th:text="#{profissional.novo}">Novo Profissional</a>
 
     <table border="1">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>CPF</th>
-                <th>Ativo</th>
-                <th>Ações</th>
+                <th th:text="#{profissional.nome}">Nome</th>
+                <th th:text="#{profissional.email}">Email</th>
+                <th th:text="#{profissional.cpf}">CPF</th>
+                <th th:text="#{profissional.ativo}">Ativo</th>
+                <th th:text="#{acoes}">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -24,14 +24,18 @@
                 <td th:text="${profissional.nome}">Nome</td>
                 <td th:text="${profissional.email}">Email</td>
                 <td th:text="${profissional.cpf}">CPF</td>
-                <td th:text="${profissional.enabled ? 'Sim' : 'Não'}">Status</td>
+
                 <td>
-                    <a th:href="@{'/admin/profissionais/edit/' + ${profissional.id}}">Editar</a>
+                    <span th:if="${profissional.enabled}" th:text="#{sim}">Sim</span>
+                    <span th:unless="${profissional.enabled}" th:text="#{nao}">Não</span>
+                </td>
+
+                <td>
+                    <a th:href="@{'/admin/profissionais/edit/' + ${profissional.id}}" th:text="#{botao.editar}">Editar</a>
                     |
                     <a th:href="@{'/admin/profissionais/delete/' + ${profissional.id}}"
-                       onclick="return confirm('Tem certeza que deseja excluir este profissional?');">
-                        Excluir
-                    </a>
+                       th:onclick="'return confirm(\'' + #{confirmar.excluir.profissional} + '\');'"
+                       th:text="#{botao.excluir}">Excluir</a>
                 </td>
             </tr>
         </tbody>

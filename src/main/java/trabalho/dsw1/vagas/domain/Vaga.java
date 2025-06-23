@@ -1,5 +1,6 @@
 package trabalho.dsw1.vagas.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -35,7 +36,7 @@ public class Vaga extends AbstractEntity<Long> {
     @Column(nullable = false, length = 64, unique = false)
     private LocalDate dataLimite; 
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "empresa_id", nullable = false)
     private Empresa empresa;
 

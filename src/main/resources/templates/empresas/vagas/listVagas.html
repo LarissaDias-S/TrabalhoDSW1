@@ -2,18 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}">
 <body>
 <div layout:fragment="conteudo">
-    <h1>Minhas Vagas</h1>
-    <a href="/empresa/vagas/new">Nova Vaga</a>
+    <h1 th:text="#{empresa.minhasVagas}">Minhas Vagas</h1>
+    <a href="/empresa/vagas/new" th:text="#{empresa.novaVaga}">Nova Vaga</a>
+
     <table border="1">
         <thead>
             <tr>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th>Localização</th>
-                <th>Tipo Contrato</th>
-                <th>Salário</th>
-                <th>Remoto</th>
-                <th>Data Limite</th>
+                <th th:text="#{vaga.titulo}">Título</th>
+                <th th:text="#{vaga.descricao}">Descrição</th>
+                <th th:text="#{vaga.localizacao}">Localização</th>
+                <th th:text="#{vaga.tipoContrato}">Tipo Contrato</th>
+                <th th:text="#{vaga.salario}">Salário</th>
+                <th th:text="#{vaga.remoto}">Remoto</th>
+                <th th:text="#{vaga.dataLimite}">Data Limite</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +24,7 @@
                 <td th:text="${vaga.localizacao}"></td>
                 <td th:text="${vaga.tipoContrato}"></td>
                 <td th:text="${#numbers.formatDecimal(vaga.salario, 1, 'COMMA', 2, 'POINT')}"></td>
-                <td th:text="${vaga.remoto} ? 'Sim' : 'Não'"></td>
+                <td th:text="${vaga.remoto} ? #{sim} : #{nao}"></td>
                 <td th:text="${#temporals.format(vaga.dataLimite, 'dd/MM/yyyy')}"></td>
             </tr>
         </tbody>

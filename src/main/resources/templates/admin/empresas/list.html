@@ -5,19 +5,19 @@
 
 <body>
 <div layout:fragment="conteudo">
-    <h1>Lista de Empresas</h1>
+    <h1 th:text="#{empresa.lista.titulo}">Lista de Empresas</h1>
 
-    <a href="/admin/empresas/new">Nova Empresa</a>
+    <a th:href="@{/admin/empresas/new}" th:text="#{empresa.nova}">Nova Empresa</a>
 
     <table border="1">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>CNPJ</th>
-                <th>Email</th>
-                <th>Cidade</th>
-                <th>Ações</th>
+                <th th:text="#{empresa.id}">ID</th>
+                <th th:text="#{empresa.nome}">Nome</th>
+                <th th:text="#{empresa.cnpj}">CNPJ</th>
+                <th th:text="#{empresa.email}">Email</th>
+                <th th:text="#{empresa.cidade}">Cidade</th>
+                <th th:text="#{empresa.acoes}">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -28,10 +28,11 @@
                 <td th:text="${empresa.email}">Email</td>
                 <td th:text="${empresa.cidade}">Cidade</td>
                 <td>
-                    <a th:href="@{'/admin/empresas/edit/' + ${empresa.id}}">Editar</a>
+                    <a th:href="@{'/admin/empresas/edit/' + ${empresa.id}}" th:text="#{empresa.acao.editar}">Editar</a>
                     |
                     <a th:href="@{'/admin/empresas/delete/' + ${empresa.id}}"
-                       onclick="return confirm('Tem certeza que deseja excluir esta empresa?');">
+                       th:onclick="|return confirm('#{empresa.acao.confirmarExclusao}');|"
+                       th:text="#{empresa.acao.excluir}">
                         Excluir
                     </a>
                 </td>

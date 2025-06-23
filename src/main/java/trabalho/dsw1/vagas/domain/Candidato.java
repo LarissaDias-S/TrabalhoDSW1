@@ -1,5 +1,6 @@
 package trabalho.dsw1.vagas.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -8,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Candidato extends AbstractEntity<Long> {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "profissional_id", nullable = false)
     private Profissional profissional;
 

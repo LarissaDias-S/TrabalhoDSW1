@@ -6,44 +6,45 @@
       layout:decorate="~{layout}">
 
 <head>
-    <title layout:fragment="titulo">Dashboard</title>
+    <title layout:fragment="titulo" th:text="#{dashboard.titulo}">Dashboard</title>
 </head>
 
 <body>
     <div layout:fragment="conteudo">
-        <h1>Dashboard</h1>
+        <h1 th:text="#{dashboard.titulo}">Dashboard</h1>
 
-        <p>Olá, <span sec:authentication="name"></span>! Você está logado como:
+        <p>
+            <span th:text="#{dashboard.boasvindas}">Olá,</span> 
+            <span sec:authentication="name"></span>! 
+            <span th:text="#{dashboard.logadoComo}">Você está logado como:</span>
             <strong><span sec:authentication="principal.authorities"></span></strong>
         </p>
 
         <div sec:authorize="hasRole('ADMIN')">
-            <h2>Área do Administrador</h2>
-            <p>Aqui você pode gerenciar profissionais e empresas.</p>
+            <h2 th:text="#{dashboard.admin.area}">Área do Administrador</h2>
+            <p th:text="#{dashboard.admin.texto}">Aqui você pode gerenciar profissionais e empresas.</p>
             <ul>
-                <li><a href="/admin/profissionais">Lista de Profissionais</a></li>
-                <li><a href="/admin/empresas">Lista de Empresas</a></li>
+                <li><a href="/admin/profissionais" th:text="#{dashboard.admin.profissionais}">Lista de Profissionais</a></li>
+                <li><a href="/admin/empresas" th:text="#{dashboard.admin.empresas}">Lista de Empresas</a></li>
             </ul>
         </div>
 
         <div sec:authorize="hasRole('EMPRESA')">
-            <h2>Área da Empresa</h2>
-            <p>Aqui você pode ver suas vagas e os profissionais inscritos.</p>
+            <h2 th:text="#{dashboard.empresa.area}">Área da Empresa</h2>
+            <p th:text="#{dashboard.empresa.texto}">Aqui você pode ver suas vagas e os profissionais inscritos.</p>
             <ul>
-                <li><a href="/empresa/vagas">Minhas Vagas</a></li>
-                <li><a href="/empresa/candidatos">Candidatos às Vagas</a></li>
+                <li><a href="/empresa/vagas" th:text="#{dashboard.empresa.vagas}">Minhas Vagas</a></li>
+                <li><a href="/empresa/candidatos" th:text="#{dashboard.empresa.candidatos}">Candidatos às Vagas</a></li>
             </ul>
         </div>
 
         <div sec:authorize="hasRole('PROFISSIONAL')">
-            <h2>Área do Profissional</h2>
-            <p>Aqui você pode acompanhar as vagas que você se inscreveu.</p>
+            <h2 th:text="#{dashboard.profissional.area}">Área do Profissional</h2>
+            <p th:text="#{dashboard.profissional.texto}">Aqui você pode acompanhar as vagas que você se inscreveu.</p>
             <ul>
-                <li><a href="/profissionais/vagas">Minhas Inscrições</a></li>
+                <li><a href="/profissionais/vagas" th:text="#{dashboard.profissional.inscricoes}">Minhas Inscrições</a></li>
             </ul>
         </div>
-
     </div>
 </body>
-
 </html>

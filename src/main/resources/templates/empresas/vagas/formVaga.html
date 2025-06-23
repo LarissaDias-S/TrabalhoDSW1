@@ -1,44 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro de Vaga</title>
+    <title th:text="#{vaga.title}">Cadastro de Vaga</title>
 </head>
 <body>
 <div layout:fragment="conteudo">
-    <h1>Nova Vaga</h1>
+    <h1 th:text="#{vaga.new}">Nova Vaga</h1>
 
     <form th:action="@{/empresa/vagas/save}" th:object="${vaga}" method="post">
-        <label for="titulo">Título:</label>
+        <label for="titulo" th:text="#{vaga.titulo}">Título:</label>
         <input type="text" id="titulo" th:field="*{titulo}" required />
         <br/>
 
-        <label for="descricao">Descrição:</label>
+        <label for="descricao" th:text="#{vaga.descricao}">Descrição:</label>
         <textarea id="descricao" th:field="*{descricao}" required></textarea>
         <br/>
 
-        <label for="localizacao">Localização:</label>
+        <label for="localizacao" th:text="#{vaga.localizacao}">Localização:</label>
         <input type="text" id="localizacao" th:field="*{localizacao}" required />
         <br/>
 
-        <label for="tipoContrato">Tipo de Contrato:</label>
+        <label for="tipoContrato" th:text="#{vaga.tipoContrato}">Tipo de Contrato:</label>
         <input type="text" id="tipoContrato" th:field="*{tipoContrato}" required />
         <br/>
 
-        <label for="salario">Salário:</label>
+        <label for="salario" th:text="#{vaga.salario}">Salário:</label>
         <input type="number" id="salario" th:field="*{salario}" step="0.01" required />
         <br/>
 
-        <label for="remoto">É remoto?</label>
+        <label for="remoto" th:text="#{vaga.remoto.pergunta}">É remoto?</label>
         <input type="checkbox" id="remoto" th:field="*{remoto}" />
         <br/>
 
-        <label for="dataLimite">Data Limite:</label>
+        <label for="dataLimite" th:text="#{vaga.dataLimite}">Data Limite:</label>
         <input type="date" id="dataLimite" th:field="*{dataLimite}" required />
         <br/>
 
-        <button type="submit">Salvar</button>
+        <button type="submit" th:text="#{vaga.botao.salvar}">Salvar</button>
     </form>
 </div>
 </body>

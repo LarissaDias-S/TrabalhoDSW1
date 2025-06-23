@@ -5,25 +5,30 @@
       xmlns:sec="http://www.thymeleaf.org/extras/springsecurity"
       layout:decorate="~{layout}">
 <head>
-    <title layout:fragment="titulo">Dashboard Profissional</title>
+    <title layout:fragment="titulo" th:text="#{dashboard.title}">Dashboard Profissional</title>
 </head>
 <body>
     <div layout:fragment="conteudo">
-        <h2>Minhas Candidaturas</h2>
-        <div th:if="${vagasInscritas.isEmpty()}">Você ainda não se candidatou a nenhuma vaga.</div> 
-            <ul>
-                <li th:each="vaga: ${vagasInscritas}">
-                    <span th:text="${vaga.titulo}">Título da vaga</span> - 
-                    <span th:text="${vaga.descricao}">Descrição</span> - 
-                    <span th:text="${vaga.salario}">Salário</span> - 
-                    <span th:text="${vaga.empresa.nome}">Empresa</span> - 
-                    <span th:text="${vaga.localizacao}">Localização</span> - 
-                    <span th:text="${vaga.tipoContrato}">Tipo de contrato</span> - 
-                    <span th:text="${vaga.remoto ? 'Sim' : 'Não'}">Remoto</span> - 
-                    <span th:text="${#temporals.format(vaga.dataLimite, 'dd/MM/yyyy')}">Data limite</span>
-                    <span th:text="${vaga.status}"></span>                    
-                </li>
-            </ul>
+        <h2 th:text="#{dashboard.myApplications}">Minhas Candidaturas</h2>
+        <div th:if="${vagasInscritas.isEmpty()}" th:text="#{dashboard.noApplications}">
+            Você ainda não se candidatou a nenhuma vaga.
+        </div>
+        <ul>
+            <li th:each="vaga: ${vagasInscritas}">
+                <span th:text="${vaga.titulo}">Título da vaga</span> - 
+                <span th:text="${vaga.descricao}">Descrição</span> - 
+                <span th:text="${vaga.salario}">Salário</span> - 
+                <span th:text="${vaga.empresa.nome}">Empresa</span> - 
+                <span th:text="${vaga.localizacao}">Localização</span> - 
+                <span th:text="${vaga.tipoContrato}">Tipo de contrato</span> - 
+                <span th:switch="${vaga.remoto}">
+                    <span th:case="true" th:text="#{vagas.remoto_sim}">Sim</span>
+                    <span th:case="false" th:text="#{vagas.remoto_nao}">Não</span>
+                </span> - 
+                <span th:text="${#temporals.format(vaga.dataLimite, 'dd/MM/yyyy')}">Data limite</span>
+                <span th:text="${vaga.status}"></span>                    
+            </li>
+        </ul>
     </div>
 </body>
 </html>
