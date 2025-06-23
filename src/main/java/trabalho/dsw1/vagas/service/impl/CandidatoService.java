@@ -19,12 +19,13 @@ public class CandidatoService {
         return candidatoDAO.save(candidato);
     }
 
-    public List<Vaga> buscarVagasCandidatadas(Profissional profissional) {
-        return candidatoDAO.findVagasByProfissional(profissional);
+    public boolean jaCandidatado(Profissional profissional, Vaga vaga) {
+        return candidatoDAO.existsByProfissionalAndVaga(profissional, vaga);
     }
 
-    public boolean jaCandidatado(Profissional profissional, Vaga vaga) {
-    return candidatoDAO.existsByProfissionalAndVaga(profissional, vaga);
-}
+    public List<Candidato> buscarCandidaturasPorProfissional(Profissional profissional) {
+        return candidatoDAO.findByProfissional(profissional);
+    }    
+
 }
 

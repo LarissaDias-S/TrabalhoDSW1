@@ -51,5 +51,5 @@ public class Candidato extends AbstractEntity<Long> {
     public void setCurriculo(byte[] curriculo) {
         this.curriculo = curriculo;
     }
-    
+
 }

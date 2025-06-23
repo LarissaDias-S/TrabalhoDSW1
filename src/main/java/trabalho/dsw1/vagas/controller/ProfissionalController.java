@@ -105,7 +105,7 @@ public class ProfissionalController {
             redirectAttributes.addFlashAttribute("erro", "Erro ao salvar o arquivo.");
             return "/vagas/" + id;
         }
-
+        
         // Salvar candidatura
         try {
             // Supondo que exista um construtor Candidato(Profissional, Vaga, String)

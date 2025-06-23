@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Entity
 public class Vaga extends AbstractEntity<Long> {
@@ -31,9 +32,16 @@ public class Vaga extends AbstractEntity<Long> {
     @Column(nullable = false, length = 64, unique = false)
     private boolean remoto; 
 
+    @Column(nullable = false, length = 64, unique = false)
+    private LocalDate dataLimite; 
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "empresa_id", nullable = false)
     private Empresa empresa;
+
+    @NotBlank
+    @Column(nullable = false, length = 64, unique = false)
+    private String status = "Aberta";
 
     // Getters e Setters
     public String getTitulo() {
@@ -91,5 +99,21 @@ public class Vaga extends AbstractEntity<Long> {
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
     }
+
+    public LocalDate getDataLimite() {
+        return dataLimite;
+    }
+
+    public void setDataLimite(LocalDate dataLimite) {
+        this.dataLimite = dataLimite;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }    
     
 }

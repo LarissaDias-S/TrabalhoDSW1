@@ -13,6 +13,7 @@
                 <th>Tipo Contrato</th>
                 <th>Salário</th>
                 <th>Remoto</th>
+                <th>Data Limite</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +24,7 @@
                 <td th:text="${vaga.tipoContrato}"></td>
                 <td th:text="${#numbers.formatDecimal(vaga.salario, 1, 'COMMA', 2, 'POINT')}"></td>
                 <td th:text="${vaga.remoto} ? 'Sim' : 'Não'"></td>
+                <td th:text="${#temporals.format(vaga.dataLimite, 'dd/MM/yyyy')}"></td>
             </tr>
         </tbody>
     </table>
