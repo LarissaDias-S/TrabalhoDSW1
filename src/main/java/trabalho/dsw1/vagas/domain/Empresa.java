@@ -75,7 +75,6 @@ public class Empresa {
         this.cidade = cidade;
     }
 
-    // Opcional: toString() para facilitar o debug
     @Override
     public String toString() {
         return "Empresa{" +
