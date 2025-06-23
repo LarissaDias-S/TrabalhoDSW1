@@ -7,10 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import trabalho.dsw1.vagas.model.Empresa;
-import trabalho.dsw1.vagas.model.Profissional;
+import trabalho.dsw1.vagas.domain.Empresa;
+import trabalho.dsw1.vagas.domain.Profissional;
 import trabalho.dsw1.vagas.repository.EmpresaRepository;
-import trabalho.dsw1.vagas.repository.ProfissionalRepository;
+import trabalho.dsw1.vagas.service.impl.ProfissionalService;
 
 @Controller
 public class CadastroController {
@@ -19,7 +19,7 @@ public class CadastroController {
     private EmpresaRepository empresaRepository;
 
     @Autowired
-    private ProfissionalRepository profissionalRepository;
+    private ProfissionalService profissionalService ;
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -42,8 +42,10 @@ public class CadastroController {
             Profissional profissional = new Profissional();
             profissional.setNome(form.get("nome"));
             profissional.setEmail(form.get("email"));
-            profissional.setSenha(encoder.encode(form.get("senha")));
-            profissionalRepository.save(profissional);
+            profissional.setPassword(encoder.encode(form.get("password")));
+            profissional.setCpf(form.get("cpf"));
+            profissional.setRole(form.get("role"));
+            profissionalService.save(profissional);
         }
 
         return "redirect:/cadastro-sucesso";

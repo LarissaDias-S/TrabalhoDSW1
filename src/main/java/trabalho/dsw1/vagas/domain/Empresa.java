@@ -1,4 +1,4 @@
-package trabalho.dsw1.vagas.model;
+package trabalho.dsw1.vagas.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

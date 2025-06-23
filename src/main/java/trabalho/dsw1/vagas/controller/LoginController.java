@@ -23,11 +23,5 @@ public class LoginController {
         form.forEach((k, v) -> System.out.println(k + ": " + v));
         return "redirect:/";
     }
-    //dashboard de quando o login de admin é feito com sucesso
-    @GetMapping("/dashboard")
-    public String dashboard() {
-        return "dashboard"; 
-    }
-
     
 }

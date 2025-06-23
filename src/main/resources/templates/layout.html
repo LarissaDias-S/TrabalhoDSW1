@@ -12,8 +12,14 @@
             <div class="navbar-logo"><a href="/" th:text="#{title.label}"></a></div>
             <div class="navbar-links">
                 <a href="/vagas" th:text="#{link.vagas}"></a>
-                <a href="/cadastro" th:text="#{link.cadastro}"></a>
-                <a href="/login" th:text="#{link.login}"></a>
+                <div sec:authorize="!isAuthenticated()">
+                    <a href="/cadastro" th:text="#{link.cadastro}"></a>
+                    <a href="/login" th:text="#{link.login}"></a>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <a href="/dashboard" th:text="#{link.dashboard}"></a>
+                    <a href="/logout" th:text="#{link.logout}"></a>
+                </div>
             </div>
         </div>
 

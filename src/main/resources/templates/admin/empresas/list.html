@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Lista de Empresas</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
 <body>
+<div layout:fragment="conteudo">
     <h1>Lista de Empresas</h1>
-    <a th:href="@{/admin/empresas/new}">Adicionar Nova Empresa</a>
+
+    <a href="/admin/empresas/new">Nova Empresa</a>
+
     <table border="1">
         <thead>
             <tr>
@@ -19,18 +22,22 @@
         </thead>
         <tbody>
             <tr th:each="empresa : ${empresas}">
-                <td th:text="${empresa.id}"></td>
-                <td th:text="${empresa.nome}"></td>
-                <td th:text="${empresa.cnpj}"></td>
-                <td th:text="${empresa.email}"></td>
-                <td th:text="${empresa.cidade}"></td>
+                <td th:text="${empresa.id}">ID</td>
+                <td th:text="${empresa.nome}">Nome</td>
+                <td th:text="${empresa.cnpj}">CNPJ</td>
+                <td th:text="${empresa.email}">Email</td>
+                <td th:text="${empresa.cidade}">Cidade</td>
                 <td>
-                    <a th:href="@{/admin/empresas/edit/{id}(id=${empresa.id})}">Editar</a>
-                    <a th:href="@{/admin/empresas/delete/{id}(id=${empresa.id})}" onclick="return confirm('Tem certeza que deseja excluir esta empresa?')">Excluir</a>
+                    <a th:href="@{'/admin/empresas/edit/' + ${empresa.id}}">Editar</a>
+                    |
+                    <a th:href="@{'/admin/empresas/delete/' + ${empresa.id}}"
+                       onclick="return confirm('Tem certeza que deseja excluir esta empresa?');">
+                        Excluir
+                    </a>
                 </td>
             </tr>
         </tbody>
     </table>
-    <a th:href="@{/dashboard}">Voltar</a>
+</div>
 </body>
 </html>

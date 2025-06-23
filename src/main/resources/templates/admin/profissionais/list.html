@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<body>
+<div layout:fragment="conteudo">
+    <h1>Lista de Profissionais</h1>
+
+    <a href="/admin/profissionais/new">Novo Profissional</a>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>CPF</th>
+                <th>Ativo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="profissional : ${profissionais}">
+                <td th:text="${profissional.nome}">Nome</td>
+                <td th:text="${profissional.email}">Email</td>
+                <td th:text="${profissional.cpf}">CPF</td>
+                <td th:text="${profissional.enabled ? 'Sim' : 'Não'}">Status</td>
+                <td>
+                    <a th:href="@{'/admin/profissionais/edit/' + ${profissional.id}}">Editar</a>
+                    |
+                    <a th:href="@{'/admin/profissionais/delete/' + ${profissional.id}}"
+                       onclick="return confirm('Tem certeza que deseja excluir este profissional?');">
+                        Excluir
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity"
+      layout:decorate="~{layout}">
+
+<head>
+    <title layout:fragment="titulo">Dashboard</title>
+</head>
+
+<body>
+    <div layout:fragment="conteudo">
+        <h1>Dashboard</h1>
+
+        <p>Olá, <span sec:authentication="name"></span>! Você está logado como:
+            <strong><span sec:authentication="principal.authorities"></span></strong>
+        </p>
+
+        <div sec:authorize="hasRole('ADMIN')">
+            <h2>Área do Administrador</h2>
+            <p>Aqui você pode gerenciar profissionais e empresas.</p>
+            <ul>
+                <li><a href="/admin/profissionais">Lista de Profissionais</a></li>
+                <li><a href="/admin/empresas">Lista de Empresas</a></li>
+            </ul>
+        </div>
+
+        <div sec:authorize="hasRole('EMPRESA')">
+            <h2>Área da Empresa</h2>
+            <p>Aqui você pode ver suas vagas e os profissionais inscritos.</p>
+            <ul>
+                <li><a href="/empresa/vagas">Minhas Vagas</a></li>
+                <li><a href="/empresa/candidatos">Candidatos às Vagas</a></li>
+            </ul>
+        </div>
+
+        <div sec:authorize="hasRole('PROFISSIONAL')">
+            <h2>Área do Profissional</h2>
+            <p>Aqui você pode acompanhar as vagas que você se inscreveu.</p>
+            <ul>
+                <li><a href="/profissionais/vagas">Minhas Inscrições</a></li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+
+</html>

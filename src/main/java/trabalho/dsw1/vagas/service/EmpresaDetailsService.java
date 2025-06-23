@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.stereotype.Service;
 
-import trabalho.dsw1.vagas.model.Empresa;
+import trabalho.dsw1.vagas.domain.Empresa;
 import trabalho.dsw1.vagas.repository.EmpresaRepository;
 
 @Service

@@ -9,25 +9,28 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.web.SecurityFilterChain;
 
+import trabalho.dsw1.vagas.security.ProfissionalDetailsServiceImpl;
 import trabalho.dsw1.vagas.service.EmpresaDetailsService;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class WebSecurityConfig {
 
-    private final EmpresaDetailsService empresaDetailsService;
-
-    public SecurityConfig(EmpresaDetailsService empresaDetailsService) {
+    private final EmpresaDetailsService empresaDetailsService;   
+    private final ProfissionalDetailsServiceImpl profissionalDetailsService;
+    
+    public WebSecurityConfig(ProfissionalDetailsServiceImpl profissionalDetailsService, EmpresaDetailsService empresaDetailsService) {
+        this.profissionalDetailsService = profissionalDetailsService;
         this.empresaDetailsService = empresaDetailsService;
     }
 
@@ -36,9 +39,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
     
-    @Autowired
-    private CustomSuccessHandler successHandler;
-
     @Bean
     public UserDetailsService adminUserDetailsService() {
         UserDetails admin = User.withUsername("admin@admin.com")
@@ -66,10 +66,19 @@ public class SecurityConfig {
     }
 
     @Bean
+    public DaoAuthenticationProvider profissionalAuthProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(profissionalDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+    }
+
+    @Bean
     public AuthenticationManager authenticationManager() {
         return new ProviderManager(Arrays.asList(
                 adminAuthProvider(),
-                empresaAuthProvider()
+                empresaAuthProvider(),
+                profissionalAuthProvider()
         ));
     }
 
@@ -79,12 +88,13 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/empresa/**").hasRole("EMPRESA")
+                .requestMatchers("/profissionais/**").hasRole("PROFISSIONAL") 
                 .requestMatchers("/vagas", "/", "/login", "/cadastro", "/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().authenticated()
             )
+            .csrf(AbstractHttpConfigurer::disable)
             .formLogin(form -> form
             	    .loginPage("/login")
-            	    .successHandler(successHandler) // agora redireciona por role
             	    .permitAll()
             )
             .logout(logout -> logout.permitAll());
