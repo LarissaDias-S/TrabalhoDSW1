@@ -13,7 +13,7 @@
                 <p><strong th:text="${c.profissional.nome}"></strong></p>
                 <p>Status atual: <span th:text="${c.status}"></span></p>
 
-                <a th:href="@{'/candidatura/' + ${c.id} + '/avaliar'}" class="btn btn-info">
+                <a th:href="@{'/vagas/' + ${c.id} + '/avaliacao'}" class="btn btn-info">
                     Avaliar
                 </a>
                 <hr>

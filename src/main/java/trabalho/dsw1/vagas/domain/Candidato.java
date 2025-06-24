@@ -21,9 +21,8 @@ public class Candidato extends AbstractEntity<Long> {
 
     @Column(nullable = false, columnDefinition = "LONGBLOB")
     private byte[] curriculo;
-
     @Column(nullable = false, length = 64, unique = false)
-    private String status = "Pendente";
+    private String status = "Ativo";
 
     @Column(length = 256, unique = false)
     private String linkEntrevista;

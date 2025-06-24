@@ -1,35 +1,46 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 
-    <body>
-        <div layout:fragment="conteudo" class="conteudo">
+<body>
+<div layout:fragment="conteudo" class="conteudo">
 
-<h2>Avaliar Candidatura</h2>
+    <h2>Avaliar Candidaturas</h2>
 
-<p><strong th:text="${candidatura.profissional.nome}"></strong></p>
+    <div th:each="candidatura : ${candidaturas}" class="card p-3 mb-4 border rounded">
+        <h4 th:text="${candidatura.profissional.nome}"></h4>
 
-<!-- Simulação de currículo -->
-<p>Currículo:</p>
-<a class="btn btn-outline-dark" href="#" target="_blank">📄 Visualizar Currículo</a>
-<!-- Pode futuramente ter um link real -->
+        <p>Currículo: 
+            <a class="btn btn-outline-dark" 
+               th:href="@{'/vagas/curriculo/' + ${candidatura.id}}" 
+               target="_blank">📄 Visualizar Currículo</a>
+        </p>
 
-<form th:action="@{'/candidatura/' + ${candidatura.id} + '/avaliar'}" method="post">
-    <label for="status">Status:</label>
-    <select name="status" id="status">
-        <option value="NAO_SELECIONADO">Não Selecionado</option>
-        <option value="ENTREVISTA">Entrevista</option>
-    </select>
+        <form th:action="@{'/vagas/' + ${candidatura.id} + '/avaliar'}" method="post">
+            <div class="mb-2">
+                <label for="status">Status:</label>
+                <select name="status" id="status" class="form-control">
+                    <option value="NAO_SELECIONADO">Não Selecionado</option>
+                    <option value="ENTREVISTA">Entrevista</option>
+                </select>
+            </div>
 
-    <label for="dataHora">Data e Hora da Entrevista (se houver):</label>
-    <input type="datetime-local" name="dataHora" id="dataHora">
+            <div class="mb-2">
+                <label for="dataHora">Data e Hora da Entrevista:</label>
+                <input type="datetime-local" name="dataHora" id="dataHora" class="form-control">
+            </div>
 
-    <label for="link">Link da Entrevista (se houver):</label>
-    <input type="text" name="link" id="link" placeholder="https://meet.google.com/abc-defg-hij">
+            <div class="mb-2">
+                <label for="link">Link da Entrevista:</label>
+                <input type="text" name="link" id="link" placeholder="https://meet.google.com/abc-defg-hij" class="form-control">
+            </div>
 
-    <button type="submit" class="btn btn-success">Salvar Avaliação</button>
-</form>
-        </div>
-    </body>
+            <button type="submit" class="btn btn-success">Salvar Avaliação</button>
+        </form>
+    </div>
+
+</div>
+</body>
 </html>

@@ -14,10 +14,13 @@
 
     <div th:each="vaga : ${vagas}">
         <p><b th:text="${vaga.descricao}"></b></p>
-        <p>Remuneração: R$ <span th:text="${vaga.salario}"></span></p>
+        <p>Salário: R$ <span th:text="${vaga.salario}"></span></p>
         <p>Data limite: <span th:text="${vaga.dataLimite}"></span></p>
+        <p>Tipo de Contrato<span th:text="${vaga.tipoContrato}"></span></p>
+        <p>Localização: <span th:text="${vaga.localizacao}"></span></p>
+        <p>Remoto: <span th:text="${vaga.remoto} ? 'Sim' : 'Não'"></span></p>
             <!-- Botão para avaliar candidaturas dessa vaga -->
-        <a th:href="@{'/vaga/' + ${vaga.id} + '/avaliar'}" class="btn btn-primary">
+        <a th:href="@{'/vagas/' + ${vaga.id} + '/avaliar'}" class="btn btn-primary">
         Avaliar Candidaturas
         </a>
         

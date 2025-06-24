@@ -14,19 +14,14 @@
             Você ainda não se candidatou a nenhuma vaga.
         </div>
         <ul>
-            <li th:each="vaga: ${vagasInscritas}">
-                <span th:text="${vaga.titulo}">Título da vaga</span> - 
-                <span th:text="${vaga.descricao}">Descrição</span> - 
-                <span th:text="${vaga.salario}">Salário</span> - 
-                <span th:text="${vaga.empresa.nome}">Empresa</span> - 
-                <span th:text="${vaga.localizacao}">Localização</span> - 
-                <span th:text="${vaga.tipoContrato}">Tipo de contrato</span> - 
-                <span th:switch="${vaga.remoto}">
-                    <span th:case="true" th:text="#{vagas.remoto_sim}">Sim</span>
-                    <span th:case="false" th:text="#{vagas.remoto_nao}">Não</span>
-                </span> - 
-                <span th:text="${#temporals.format(vaga.dataLimite, 'dd/MM/yyyy')}">Data limite</span>
-                <span th:text="${vaga.status}"></span>                    
+            <li th:each="entry : ${vagasInscritas}">
+                <span th:text="${entry.key.titulo}">Título da vaga</span> - 
+                <span th:text="${entry.key.descricao}">Descrição</span> - 
+                <span th:text="${entry.key.salario}">Salário</span> - 
+                <span th:text="${entry.key.empresa.nome}">Empresa</span> - 
+                <span th:text="${entry.key.localizacao}">Localização</span> - 
+                <span>Status: <span th:text="${entry.value}">Status</span></span> -
+                <span th:text="${#temporals.format(entry.key.dataLimite, 'dd/MM/yyyy')}">Data limite</span>
             </li>
         </ul>
     </div>

@@ -8,15 +8,20 @@ import trabalho.dsw1.vagas.dao.IVagaDAO;
 import trabalho.dsw1.vagas.repository.EmpresaRepository;
 import trabalho.dsw1.vagas.service.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
+import org.springframework.http.HttpHeaders;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 public class AvaliacaoController {
@@ -34,7 +39,7 @@ public class AvaliacaoController {
     private IVagaDAO vagaDAO;
 
     //lista de candidaturas para uma vaga {id} em especifico
-    @GetMapping("/vaga/{id}/avaliar")
+    @GetMapping("/vagas/{id}/avaliacao")
     public String listarCandidatos(@PathVariable Long id, Model model) {
         List<Candidato> candidaturas = candidaturaRepository.findByVagaId(id);
         model.addAttribute("candidaturas", candidaturas);
@@ -42,7 +47,7 @@ public class AvaliacaoController {
     }
 
     //processo de avaliacao de uma candidatura
-    @PostMapping("/candidatura/{id}/avaliar")
+    @PostMapping("/vagas/{id}/avaliar")
     public String avaliar(@PathVariable Long id,
                           @RequestParam String status,
                           @RequestParam(required = false) String link,
@@ -51,7 +56,7 @@ public class AvaliacaoController {
         Candidato candidatura = candidaturaRepository.findById(id).orElseThrow();
 
         candidatura.setStatus(status);
-
+        
         if (status.equals("ENTREVISTA")) {
             candidatura.setLinkEntrevista(link);
             candidatura.setDataHoraEntrevista(LocalDateTime.parse(dataHora));
@@ -60,32 +65,47 @@ public class AvaliacaoController {
         candidaturaRepository.save(candidatura);
         emailService.enviarResultado(candidatura);
 
-        return "redirect:/vaga/" + candidatura.getVaga().getId() + "/avaliar";
+        return "empresas/dashboard-empresas"; 
     }
     //candidatura a avaliar 
-    @GetMapping("/candidatura/{id}/avaliar")
+    @GetMapping("/vagas/{id}/avaliar")
     public String exibirFormularioAvaliacao(@PathVariable Long id, Model model) {
-        Candidato candidatura = candidaturaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Candidatura não encontrada"));
-
-        model.addAttribute("candidatura", candidatura);
+        List<Candidato> candidaturas = candidaturaRepository.findByVagaId(id);
+        model.addAttribute("candidaturas", candidaturas);
+        model.addAttribute("vagaId", id);
         return "empresas/avaliar-candidatura";
     }
 
     //listar vagas da empresa logada
-    @GetMapping("/lista-vagas-empresa")
+    @GetMapping("/avaliacao")
     public String listarVagasDaEmpresa(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-    String emailEmpresa = userDetails.getUsername(); // pega o email da empresa logada
+        String emailEmpresa = userDetails.getUsername(); // pega o email da empresa logada
 
-    // buscar a empresa pelo e-mail
-    Empresa empresa = empresaRepository.findByEmail(emailEmpresa).orElseThrow(() -> 
-    new RuntimeException("Empresa não encontrada"));
+        // buscar a empresa pelo e-mail
+        Empresa empresa = empresaRepository.findByEmail(emailEmpresa).orElseThrow(() -> 
+        new RuntimeException("Empresa não encontrada"));
 
-    // busca as vagas da empresa
-    List<Vaga> vagas = vagaDAO.findByEmpresaId(empresa.getId());
+        // busca as vagas da empresa
+        List<Vaga> vagas = vagaDAO.findByEmpresaId(empresa.getId());
 
-    model.addAttribute("vagas", vagas);
-    return "empresas/lista-vagas-empresa";
+        model.addAttribute("vagas", vagas);
+        return "empresas/lista-vagas-empresa";
     }
+
+    @GetMapping("/vagas/curriculo/{id}")
+    public ResponseEntity<byte[]> viewCurriculo(@PathVariable Long id) {
+        Candidato candidatura = candidaturaRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Candidatura não encontrada"));
+
+        byte[] pdf = candidatura.getCurriculo();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"curriculo.pdf\"");
+
+        return ResponseEntity.ok()
+            .headers(headers)
+            .body(pdf);
+    }
+    
 
 }

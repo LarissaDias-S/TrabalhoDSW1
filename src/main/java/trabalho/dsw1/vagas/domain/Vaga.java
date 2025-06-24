@@ -1,15 +1,21 @@
 package trabalho.dsw1.vagas.domain;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
 public class Vaga extends AbstractEntity<Long> {
+
+    @OneToMany(mappedBy = "vaga", cascade = CascadeType.REMOVE)
+    private List<Candidato> candidatos;
 
     @NotBlank
     @Column(nullable = false, length = 64, unique = true)
@@ -39,10 +45,6 @@ public class Vaga extends AbstractEntity<Long> {
     @ManyToOne(optional = false, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "empresa_id", nullable = false)
     private Empresa empresa;
-
-    @NotBlank
-    @Column(nullable = false, length = 64, unique = false)
-    private String status = "Aberta";
 
     // Getters e Setters
     public String getTitulo() {
@@ -109,12 +111,12 @@ public class Vaga extends AbstractEntity<Long> {
         this.dataLimite = dataLimite;
     }
 
-    public String getStatus() {
-        return status;
+    public List<Candidato> getCandidatos() {
+        return candidatos;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }    
+    public void setCandidatos(List<Candidato> candidatos) {
+        this.candidatos = candidatos;
+    }
     
 }
