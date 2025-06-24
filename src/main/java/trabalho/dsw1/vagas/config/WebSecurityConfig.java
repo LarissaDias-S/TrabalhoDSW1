@@ -89,7 +89,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/empresa/**").hasRole("EMPRESA")
                 .requestMatchers("/profissionais/**").hasRole("PROFISSIONAL") 
-                .requestMatchers("/vagas", "/", "/login", "/cadastro", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/vagas", "/vagas/**", "/", "/login", "/cadastro", "/css/**", "/js/**", "/images/**").permitAll()
                 .anyRequest().authenticated()
             )
             .csrf(AbstractHttpConfigurer::disable)

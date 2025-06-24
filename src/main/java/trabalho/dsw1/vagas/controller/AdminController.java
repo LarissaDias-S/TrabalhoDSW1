@@ -102,9 +102,25 @@ public class AdminController {
     // salvar nova empresa
     @PostMapping("/empresas/save")
     public String saveEmpresa(@ModelAttribute("empresa") Empresa empresa) {
-        empresaService.saveEmpresa(empresa);
-        return "redirect:/admin/empresas"; // Redirect back to the list
+        if (empresa.getId() != null) {
+            Empresa existente = empresaService.findEmpresaById(empresa.getId()).orElse(null);
+            if (existente != null) {
+                if (empresa.getSenha() == null || empresa.getSenha().isBlank()) {
+                // manter a senha antiga
+                empresa.setSenha(existente.getSenha());
+            } else {
+                empresa.setSenha(passwordEncoder.encode(empresa.getSenha()));
+            }
+        }
+    } else {
+        // nova empresa
+        empresa.setSenha(passwordEncoder.encode(empresa.getSenha()));
     }
+    empresaService.saveEmpresa(empresa);
+    return "redirect:/admin/empresas";
+    }
+
+
 
     //mostrar formulario que edita empresa existente
     @GetMapping("/empresas/edit/{id}")

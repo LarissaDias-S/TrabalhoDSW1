@@ -27,6 +27,13 @@ public class AvaliacaoController {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private EmpresaRepository empresaRepository;
+
+    @Autowired
+    private IVagaDAO vagaDAO;
+
+    //lista de candidaturas para uma vaga {id} em especifico
     @GetMapping("/vaga/{id}/avaliar")
     public String listarCandidatos(@PathVariable Long id, Model model) {
         List<Candidato> candidaturas = candidaturaRepository.findByVagaId(id);
@@ -34,6 +41,7 @@ public class AvaliacaoController {
         return "empresas/avaliacao";
     }
 
+    //processo de avaliacao de uma candidatura
     @PostMapping("/candidatura/{id}/avaliar")
     public String avaliar(@PathVariable Long id,
                           @RequestParam String status,
@@ -54,6 +62,7 @@ public class AvaliacaoController {
 
         return "redirect:/vaga/" + candidatura.getVaga().getId() + "/avaliar";
     }
+    //candidatura a avaliar 
     @GetMapping("/candidatura/{id}/avaliar")
     public String exibirFormularioAvaliacao(@PathVariable Long id, Model model) {
         Candidato candidatura = candidaturaRepository.findById(id)
@@ -62,13 +71,8 @@ public class AvaliacaoController {
         model.addAttribute("candidatura", candidatura);
         return "empresas/avaliar-candidatura";
     }
-    
-    @Autowired
-    private EmpresaRepository empresaRepository;
-    @Autowired
-    private IVagaDAO vagaDAO;
 
-
+    //listar vagas da empresa logada
     @GetMapping("/lista-vagas-empresa")
     public String listarVagasDaEmpresa(Model model, @AuthenticationPrincipal UserDetails userDetails) {
     String emailEmpresa = userDetails.getUsername(); // pega o email da empresa logada

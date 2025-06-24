@@ -51,7 +51,7 @@ public class VagasController {
                 vagas = vagaService.buscarVagasValidas(hoje);
             }
             model.addAttribute("cidade", "");
-            vagas = vagaService.buscarVagasValidas(hoje);
+            //vagas = vagaService.buscarVagasValidas(hoje);
         } else {
             if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_PROFISSIONAL"))) {
                 Profissional profissional = profissionalService.findByEmail(auth.getName());
