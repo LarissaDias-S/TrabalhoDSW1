@@ -4,13 +4,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>Minhas Vagas</title>
+    <title layout:fragment="titulo">Minhas Vagas</title>
 </head>
 <body>
     <div layout:fragment="conteudo">
 
-            <div class="conteudo">
     <h2>Minhas Vagas</h2>
+
+    <a th:href="@{/empresa/vagas/new}" class="btn btn-success mb-3">Nova Vaga</a>
 
     <div th:each="vaga : ${vagas}">
         <p><b th:text="${vaga.descricao}"></b></p>
@@ -19,13 +20,11 @@
         <p>Tipo de Contrato<span th:text="${vaga.tipoContrato}"></span></p>
         <p>Localização: <span th:text="${vaga.localizacao}"></span></p>
         <p>Remoto: <span th:text="${vaga.remoto} ? 'Sim' : 'Não'"></span></p>
-            <!-- Botão para avaliar candidaturas dessa vaga -->
         <a th:href="@{'/vagas/' + ${vaga.id} + '/avaliar'}" class="btn btn-primary">
         Avaliar Candidaturas
         </a>
         
         <hr>
-    </div>
     </div>
     </div>
 </body>

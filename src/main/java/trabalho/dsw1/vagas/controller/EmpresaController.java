@@ -50,6 +50,7 @@ public class EmpresaController {
         Empresa empresa = empresaService.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Empresa não encontrada para o e-mail: " + email)); // busca a empresa no banco
         model.addAttribute("vagas", vagaService.getAllVagasByEmpresaId(empresa.getId()));
-        return "empresas/vagas/listVagas";
+        return "empresas/lista-vagas-empresa";
     }
+
 }
