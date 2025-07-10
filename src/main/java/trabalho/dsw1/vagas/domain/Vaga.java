@@ -18,15 +18,15 @@ public class Vaga extends AbstractEntity<Long> {
     private List<Candidato> candidatos;
 
     @NotBlank
-    @Column(nullable = false, length = 64, unique = true)
+    @Column(nullable = false, length = 64, unique = false)
     private String titulo;
 
     @NotBlank
-    @Column(nullable = false, length = 256, unique = true)
+    @Column(nullable = false, length = 256, unique = false)
     private String descricao;
 
     @NotBlank
-    @Column(nullable = false, length = 64, unique = true)
+    @Column(nullable = false, length = 64, unique = false)
     private String localizacao;
 
     @NotBlank
