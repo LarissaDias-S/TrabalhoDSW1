@@ -1,32 +1,43 @@
 package trabalho.dsw1.vagas.domain;
 
 import java.time.LocalDateTime;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Candidato extends AbstractEntity<Long> {
 
+    @NotNull(message = "O profissional é obrigatório")
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "profissional_id", nullable = false)
     private Profissional profissional;
 
+    @NotNull(message = "A vaga é obrigatória")
     @ManyToOne
     @JoinColumn(name = "vaga_id", nullable = false)
     private Vaga vaga;
 
+    @NotNull(message = "O currículo é obrigatório")
+    @Size(min = 1, message = "O currículo não pode estar vazio")
     @Column(nullable = false, columnDefinition = "LONGBLOB")
     private byte[] curriculo;
-    @Column(nullable = false, length = 64, unique = false)
+
+    @NotBlank(message = "O status é obrigatório")
+    @Size(max = 64, message = "O status deve ter no máximo 64 caracteres")
+    @Pattern(regexp = "Ativo|Inativo|Pendente", message = "Status inválido")
+    @Column(nullable = false, length = 64)
     private String status = "Ativo";
 
-    @Column(length = 256, unique = false)
+    @Size(max = 256, message = "O link da entrevista deve ter no máximo 256 caracteres")
+    @Pattern(regexp = "^(https?://.*)?$", message = "Link da entrevista deve ser uma URL válida")
+    @Column(length = 256)
     private String linkEntrevista;
 
+    @PastOrPresent(message = "A data/hora da entrevista deve ser no passado ou presente")
     @Column(nullable = true)
     private LocalDateTime dataHoraEntrevista;
     

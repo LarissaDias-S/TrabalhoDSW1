@@ -2,36 +2,44 @@ package trabalho.dsw1.vagas.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
+
 import trabalho.dsw1.vagas.validation.UniqueCPF;
 
 @SuppressWarnings("serial")
 @Entity
 public class Profissional extends AbstractEntity<Long> {
     
-    @NotBlank
+    @NotBlank(message = "{Profissional.email.NotBlank}")
+    @Email(message = "{Profissional.email.Email}")
+    @Size(max = 64, message = "{Profissional.email.Size}")
     @Column(nullable = false, length = 64, unique = true)
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "{Profissional.password.NotBlank}")
+    @Size(min = 6, max = 64, message = "{Profissional.password.Size}")
     @Column(nullable = false, length = 64)
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "{Profissional.nome.NotBlank}")
+    @Size(min = 2, max = 60, message = "{Profissional.nome.Size}")
     @Column(nullable = false, length = 60)
     private String nome;
 
-    @UniqueCPF
-    @NotBlank
+    @NotBlank(message = "{Profissional.cpf.NotBlank}")
+    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "{Profissional.cpf.Pattern}")
+    @UniqueCPF(message = "{Profissional.cpf.UniqueCPF}") // Sua anotação customizada também usa a chave
     @Column(nullable = false, length = 14, unique = true)
     private String cpf;
 
-    @NotBlank
+    @NotBlank(message = "{Profissional.role.NotBlank}")
+    @Pattern(regexp = "ROLE_USER|ROLE_ADMIN|ROLE_EMPRESA|ROLE_PROFISSIONAL", message = "{Profissional.role.Pattern}")
     @Column(nullable = false, length = 32)
     private String role;
 
     @Column(nullable = false)
     private boolean enabled;
+
 
     // Getters e Setters
 

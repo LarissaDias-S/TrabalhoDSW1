@@ -82,23 +82,28 @@ public class WebSecurityConfig {
         ));
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/empresa/**").hasRole("EMPRESA")
-                .requestMatchers("/profissionais/**").hasRole("PROFISSIONAL") 
-                .requestMatchers("/vagas", "/vagas/**", "/", "/login", "/cadastro", "/css/**", "/js/**", "/images/**").permitAll()
-                .anyRequest().authenticated()
-            )
-            .csrf(AbstractHttpConfigurer::disable)
-            .formLogin(form -> form
-            	    .loginPage("/login")
-            	    .permitAll()
-            )
-            .logout(logout -> logout.permitAll());
-
+   @Bean
+   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/admin/**").hasRole("ADMIN")
+            .requestMatchers("/empresa/**").hasRole("EMPRESA")
+            .requestMatchers("/profissionais/**").hasRole("PROFISSIONAL")
+            .requestMatchers("/vagas", "/vagas/**", "/", "/login", "/cadastro", "/css/**", "/js/**", "/images/**").permitAll()
+            .anyRequest().authenticated()
+        )
+        .csrf(AbstractHttpConfigurer::disable)
+        .formLogin(form -> form
+            .loginPage("/login")
+            .defaultSuccessUrl("/", true) // Redireciona sempre para home após login
+            .failureUrl("/login?error=true") // Parâmetro para mostrar erro
+            .permitAll()
+        )
+        .logout(logout -> logout
+            .logoutSuccessUrl("/login?logout")
+            .permitAll()
+        );
+        
         return http.build();
     }
 }

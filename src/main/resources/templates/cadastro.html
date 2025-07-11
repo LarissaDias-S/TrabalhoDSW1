@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" 
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
@@ -9,6 +9,14 @@
         <div layout:fragment="conteudo">
             <div class="conteudo">
                 <h1 th:text="#{register.title}">Cadastro</h1>
+
+                <div th:if="${success}">
+                    <p th:text="${success}"></p>
+                </div>
+
+                <div th:if="${error}">
+                    <p th:text="${error}"></p>
+                </div>
 
                 <h2 th:text="#{register.choice}">Você deseja criar uma conta profissional ou empresarial?</h2>
 
@@ -20,16 +28,16 @@
                         <input type="hidden" name="tipo" value="profissional" />
 
                         <label th:text="#{register.nameLabel}">Nome:</label>
-                        <input type="text" id="nome" name="nome" th:placeholder="#{register.namePlaceholder}" required />
+                        <input type="text" id="nomeProfissional" name="nome" th:placeholder="#{register.namePlaceholder}" required />
 
                         <label th:text="#{register.cpfLabel}">CPF:</label>
-                        <input type="text" id="cpf" name="cpf" th:placeholder="#{register.cpfPlaceholder}" required />
+                        <input type="text" id="cpfProfissional" name="cpf" th:placeholder="#{register.cpfPlaceholder}" required />
 
                         <label th:text="#{register.emailLabel}">Email:</label>
-                        <input type="email" id="email" name="email" th:placeholder="#{register.emailPlaceholder}" required />
+                        <input type="email" id="emailProfissional" name="email" th:placeholder="#{register.emailPlaceholder}" required />
 
                         <label th:text="#{register.passwordLabel}">Senha:</label>
-                        <input type="password" id="password" name="password" th:placeholder="#{register.passwordPlaceholder}" required />
+                        <input type="password" id="passwordProfissional" name="password" th:placeholder="#{register.passwordPlaceholder}" required />
 
                         <input type="hidden" name="role" value="ROLE_PROFISSIONAL" />
                         <input type="hidden" name="enabled" value="true" />
@@ -43,27 +51,52 @@
                         <input type="hidden" name="tipo" value="empresa" />
 
                         <label th:text="#{register.companyNameLabel}">Nome da Empresa:</label>
-                        <input type="text" id="nome" name="nome" th:placeholder="#{register.companyNamePlaceholder}" required />
+                        <input type="text" id="nomeEmpresa" name="nome" th:placeholder="#{register.companyNamePlaceholder}" required />
 
                         <label th:text="#{register.emailLabel}">Email:</label>
-                        <input type="email" id="email" name="email" th:placeholder="#{register.emailPlaceholder}" required />
+                        <input type="email" id="emailEmpresa" name="email" th:placeholder="#{register.emailPlaceholder}" required />
 
                         <label th:text="#{register.passwordLabel}">Senha:</label>
-                        <input type="password" id="senha" name="senha" th:placeholder="#{register.passwordPlaceholder}" required />
+                        <input type="password" id="senhaEmpresa" name="senha" th:placeholder="#{register.passwordPlaceholder}" required />
 
                         <label th:text="#{register.cnpjLabel}">CNPJ:</label>
-                        <input type="text" id="cnpj" name="cnpj" th:placeholder="#{register.cnpjPlaceholder}" required />
+                        <input type="text" id="cnpjEmpresa" name="cnpj" th:placeholder="#{register.cnpjPlaceholder}" required />
 
                         <label th:text="#{register.cityLabel}">Cidade:</label>
-                        <input type="text" id="cidade" name="cidade" th:placeholder="#{register.cityPlaceholder}" required />
+                        <input type="text" id="cidadeEmpresa" name="cidade" th:placeholder="#{register.cityPlaceholder}" required />
 
                         <label th:text="#{register.descriptionLabel}">Descrição:</label>
-                        <textarea id="descricao" name="descricao" th:placeholder="#{register.descriptionPlaceholder}" required></textarea>
+                        <textarea id="descricaoEmpresa" name="descricao" th:placeholder="#{register.descriptionPlaceholder}" required></textarea>
 
                         <button type="submit" th:text="#{register.submitButton}">Cadastrar</button>
                     </form>
                 </div>
             </div>
         </div>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            function mostraForm(tipo) {
+                if (tipo === 'profissional') {
+                    document.getElementById('form-profissional').style.display = 'block';
+                    document.getElementById('form-empresa').style.display = 'none';
+                } else {
+                    document.getElementById('form-profissional').style.display = 'none';
+                    document.getElementById('form-empresa').style.display = 'block';
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Captura o 'lastTipo' do flash attribute, se existir
+                const lastTipo = /*[[${lastTipo}]]*/ null;
+                if (lastTipo) {
+                    mostraForm(lastTipo); // Reabre o formulário que estava ativo
+                } else {
+                    // Esconde ambos os formulários no carregamento inicial da página
+                    document.getElementById('form-profissional').style.display = 'none';
+                    document.getElementById('form-empresa').style.display = 'none';
+                }
+            });
+            /*]]>*/
+        </script>
     </body>
 </html>

@@ -1,25 +1,49 @@
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-
-    <body>
-        <div layout:fragment="conteudo">
-
-            <div class="conteudo">
-                <h1 th:text="#{login.titulo}">Login</h1>
-                <form th:action="@{/login}" method="post">
-                    <label th:text="#{login.label.email}">Email:</label>
-                    <input type="email" id="email" name="username" th:placeholder="#{login.placeholder.email}" required />
-
-                    <label th:text="#{login.label.senha}">Senha:</label>
-                    <input type="password" id="senha" name="password" th:placeholder="#{login.placeholder.senha}" required />
-                    
-                    <button type="submit" th:text="#{login.botao.entrar}">Entrar</button>
-                </form>
+<head>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+    <div layout:fragment="conteudo">
+        <div class="conteudo">
+            <h1 th:text="#{login.titulo}">Login</h1>
+            
+            <!-- Mensagem de erro global -->
+            <div th:if="${param.error}" class="alert alert-danger">
+                <span th:text="#{login.erro.credenciais}">Email ou senha inválidos.</span>
             </div>
-        </div>        
-    </body>
+
+            <form th:action="@{/login}" method="post" id="loginForm">
+                <!-- Campo de Email -->
+                <div class="mb-3">
+                    <label th:text="#{login.label.email}">Email:</label>
+                    <input type="email" id="email" name="username" 
+                           th:placeholder="#{login.placeholder.email}" 
+                           required
+                           class="form-control"/>
+                    <div id="emailError" class="invalid-feedback"></div>
+                </div>
+
+                <!-- Campo de Senha -->
+                <div class="mb-3">
+                    <label th:text="#{login.label.senha}">Senha:</label>
+                    <input type="password" id="senha" name="password" 
+                           th:placeholder="#{login.placeholder.senha}" 
+                           required
+                           minlength="6"
+                           class="form-control"/>
+                    <div id="senhaError" class="invalid-feedback"></div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" th:text="#{login.botao.entrar}">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Validação em tempo real com JavaScript -->
+    <script th:src="@{/static/js/login-validation.js}"></script>
+</body>
 </html>

@@ -10,6 +10,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 public class Vaga extends AbstractEntity<Long> {
@@ -17,34 +21,42 @@ public class Vaga extends AbstractEntity<Long> {
     @OneToMany(mappedBy = "vaga", cascade = CascadeType.REMOVE)
     private List<Candidato> candidatos;
 
-    @NotBlank
-    @Column(nullable = false, length = 64, unique = false)
+    @NotBlank(message = "O título é obrigatório")
+    @Size(max = 64, message = "O título deve ter no máximo 64 caracteres")
+    @Column(nullable = false, length = 64)
     private String titulo;
 
-    @NotBlank
-    @Column(nullable = false, length = 256, unique = false)
+    @NotBlank(message = "A descrição é obrigatória")
+    @Size(max = 256, message = "A descrição deve ter no máximo 256 caracteres")
+    @Column(nullable = false, length = 256)
     private String descricao;
 
-    @NotBlank
-    @Column(nullable = false, length = 64, unique = false)
+    @NotBlank(message = "A localização é obrigatória")
+    @Size(max = 64, message = "A localização deve ter no máximo 64 caracteres")
+    @Column(nullable = false, length = 64)
     private String localizacao;
 
-    @NotBlank
-    @Column(nullable = false, length = 64, unique = false)
+    @NotBlank(message = "O tipo de contrato é obrigatório")
+    @Size(max = 64, message = "O tipo de contrato deve ter no máximo 64 caracteres")
+    @Column(nullable = false, length = 64)
     private String tipoContrato; 
 
-    @Column(nullable = false, length = 64, unique = false)
+    @PositiveOrZero(message = "O salário deve ser zero ou positivo")
+    @Column(nullable = false)
     private double salario;
 
-    @Column(nullable = false, length = 64, unique = false)
+    @Column(nullable = false)
     private boolean remoto; 
 
-    @Column(nullable = false, length = 64, unique = false)
+    @NotNull(message = "A data limite é obrigatória")
+    @FutureOrPresent(message = "A data limite deve ser hoje ou futura")
+    @Column(nullable = false)
     private LocalDate dataLimite; 
 
     @ManyToOne(optional = false, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "empresa_id", nullable = false)
     private Empresa empresa;
+
 
     // Getters e Setters
     public String getTitulo() {

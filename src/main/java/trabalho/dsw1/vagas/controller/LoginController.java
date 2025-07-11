@@ -15,13 +15,5 @@ public class LoginController {
         {
             return "login"; 
         }
-
-    @PostMapping("/login")
-    public String login(@RequestParam Map<String, String> form) 
-    {
-        System.out.println("Dados de login recebidos:");
-        form.forEach((k, v) -> System.out.println(k + ": " + v));
-        return "redirect:/";
-    }
     
 }
