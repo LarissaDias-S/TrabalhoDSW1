@@ -11,29 +11,35 @@
         <input type="hidden" th:field="*{id}" />
 
         <label for="nome" th:text="#{empresa.nome}">Nome:</label>
-        <input type="text" id="nome" th:field="*{nome}" required />
+        <input type="text" id="nome" th:field="*{nome}" />
+        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error-message"></span>
         <br/>
 
         <label for="cnpj" th:text="#{empresa.cnpj}">CNPJ:</label>
-        <input type="text" id="cnpj" th:field="*{cnpj}" required />
+        <input type="text" id="cnpj" th:field="*{cnpj}" />
+        <span th:if="${#fields.hasErrors('cnpj')}" th:errors="*{cnpj}" class="error-message"></span>
         <br/>
 
         <label for="email" th:text="#{empresa.email}">Email:</label>
-        <input type="email" id="email" th:field="*{email}" required />
+        <input type="email" id="email" th:field="*{email}" />
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></span>
         <br/>
 
         <label for="senha" th:text="#{empresa.senha}">Senha:</label>
         <input type="password" id="senha" th:field="*{senha}" />
+        <span th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" class="error-message"></span>
         <br/>
         <small th:if="${empresa.id != null}" th:text="#{empresa.senha.instrucoes}">Deixe em branco para manter a senha atual.</small>
         <br/>
 
         <label for="descricao" th:text="#{empresa.descricao}">Descrição:</label>
         <textarea id="descricao" th:field="*{descricao}"></textarea>
+        <span th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}" class="error-message"></span>
         <br/>
 
         <label for="cidade" th:text="#{empresa.cidade}">Cidade:</label>
         <input type="text" id="cidade" th:field="*{cidade}" />
+        <span th:if="${#fields.hasErrors('cidade')}" th:errors="*{cidade}" class="error-message"></span>
         <br/>
 
         <button type="submit" th:text="#{botao.salvar}">Salvar</button>
