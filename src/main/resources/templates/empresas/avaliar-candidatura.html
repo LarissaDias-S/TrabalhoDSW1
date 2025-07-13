@@ -9,7 +9,9 @@
 
     <h2>Avaliar Candidaturas</h2>
 
-    <div th:each="candidatura : ${candidaturas}" class="card p-3 mb-4 border rounded">
+    <div th:each="candidatura : ${candidaturas}" 
+         th:if="${candidatura.status} == 'ABERTO'"
+         class="card p-3 mb-4 border rounded">
         <h4 th:text="${candidatura.profissional.nome}"></h4>
 
         <p>Currículo: 
@@ -21,18 +23,16 @@
         <form th:action="@{'/vagas/' + ${candidatura.id} + '/avaliar'}" method="post">
             <div class="mb-2">
                 <label for="status">Status:</label>
-                <select name="status" id="status" class="form-control">
+                <select name="status" id="status-[[${candidatura.id}]]" class="form-control" onchange="toggleEntrevistaFields(this)">
                     <option value="NAO_SELECIONADO">Não Selecionado</option>
                     <option value="ENTREVISTA">Entrevista</option>
                 </select>
             </div>
 
-            <div class="mb-2">
+            <div class="mb-2 entrevista-fields" id="entrevista-fields-[[${candidatura.id}]]" style="display:none;">
                 <label for="dataHora">Data e Hora da Entrevista:</label>
                 <input type="datetime-local" name="dataHora" id="dataHora" class="form-control">
-            </div>
 
-            <div class="mb-2">
                 <label for="link">Link da Entrevista:</label>
                 <input type="text" name="link" id="link" placeholder="https://meet.google.com/abc-defg-hij" class="form-control">
             </div>
@@ -42,5 +42,6 @@
     </div>
 
 </div>
+<script src="/js/script.js"></script>
 </body>
 </html>

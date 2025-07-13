@@ -32,10 +32,29 @@
         <small th:if="${profissional.id != null}" th:text="#{profissional.senha.info}">Deixe em branco para manter a senha atual.</small>
         <br/>
 
-        <label for="enabled" th:text="#{profissional.ativo}">Ativo:</label>
-        <input type="checkbox" id="enabled" th:field="*{enabled}" />
+        <label for="telefone" th:text="#{profissional.telefone}">Telefone:</label>
+        <input type="text" id="telefone" th:field="*{telefone}" />
+        <span th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}" class="error-message"></span>
         <br/>
-        
+
+        <label for="sexo" th:text="#{profissional.sexo}">Sexo:</label>
+        <select id="sexo" th:field="*{sexo}">
+            <option value="" th:text="#{select.selecione}">Selecione</option>
+            <option value="M" th:text="'Masculino'">Masculino</option>
+            <option value="F" th:text="'Feminino'">Feminino</option>
+            <option value="OUTRO" th:text="'Outro'">Outro</option>
+        </select>
+        <span th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}" class="error-message"></span>
+        <br/>
+
+        <label for="dataNascimento" th:text="#{profissional.dataNascimento}">Data de Nascimento:</label>
+        <input type="date" id="dataNascimento" th:field="*{dataNascimento}" />
+        <span th:if="${#fields.hasErrors('dataNascimento')}" th:errors="*{dataNascimento}" class="error-message"></span>
+        <br/>
+
+        <input type="hidden" th:field="*{role}" th:value="'ROLE_PROFISSIONAL'" />
+        <input type="hidden" th:field="*{enabled}" th:value="true" />
+
         <button type="submit" th:text="#{botao.salvar}">Salvar</button>
     </form>
 </div>

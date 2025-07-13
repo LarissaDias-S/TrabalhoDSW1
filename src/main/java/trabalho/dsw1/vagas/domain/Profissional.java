@@ -1,5 +1,7 @@
 package trabalho.dsw1.vagas.domain;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.*;
@@ -36,6 +38,21 @@ public class Profissional extends AbstractEntity<Long> {
     @Pattern(regexp = "ROLE_USER|ROLE_ADMIN|ROLE_EMPRESA|ROLE_PROFISSIONAL", message = "{Profissional.role.Pattern}")
     @Column(nullable = false, length = 32)
     private String role;
+
+    @NotBlank(message = "{Profissional.telefone.NotBlank}")
+    @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}", message = "{Profissional.telefone.Pattern}")
+    @Column(nullable = false, length = 15)
+    private String telefone;
+
+    @NotBlank(message = "{Profissional.sexo.NotBlank}")
+    @Pattern(regexp = "M|F|OUTRO", message = "{Profissional.sexo.Pattern}")
+    @Column(nullable = false, length = 6)
+    private String sexo;
+
+    @NotNull(message = "{Profissional.dataNascimento.NotNull}")
+    @Past(message = "{Profissional.dataNascimento.Past}")
+    @Column(nullable = false)
+    private LocalDate dataNascimento;
 
     @Column(nullable = false)
     private boolean enabled;
@@ -90,4 +107,33 @@ public class Profissional extends AbstractEntity<Long> {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public boolean isEmpty() {
+        return email == null && password == null && nome == null && cpf == null && role == null && telefone == null && sexo == null;
+    }
+
 }

@@ -18,9 +18,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import org.springframework.http.HttpHeaders;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -59,7 +58,8 @@ public class AvaliacaoController {
         
         if (status.equals("ENTREVISTA")) {
             candidatura.setLinkEntrevista(link);
-            candidatura.setDataHoraEntrevista(LocalDateTime.parse(dataHora));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            candidatura.setDataHoraEntrevista(LocalDateTime.parse(dataHora, formatter));
         }
 
         candidaturaRepository.save(candidatura);

@@ -11,14 +11,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import org.springframework.security.web.SecurityFilterChain;
 
+import trabalho.dsw1.vagas.dao.IProfissionalDAO;
 import trabalho.dsw1.vagas.security.ProfissionalDetailsServiceImpl;
 import trabalho.dsw1.vagas.service.EmpresaDetailsService;
 
@@ -28,10 +28,12 @@ public class WebSecurityConfig {
 
     private final EmpresaDetailsService empresaDetailsService;   
     private final ProfissionalDetailsServiceImpl profissionalDetailsService;
+    private final IProfissionalDAO profissionalDAO;
     
-    public WebSecurityConfig(ProfissionalDetailsServiceImpl profissionalDetailsService, EmpresaDetailsService empresaDetailsService) {
+    public WebSecurityConfig(ProfissionalDetailsServiceImpl profissionalDetailsService, EmpresaDetailsService empresaDetailsService, IProfissionalDAO profissionalDAO) {
         this.profissionalDetailsService = profissionalDetailsService;
         this.empresaDetailsService = empresaDetailsService;
+        this.profissionalDAO = profissionalDAO;
     }
 
     @Bean
@@ -40,19 +42,24 @@ public class WebSecurityConfig {
     }
     
     @Bean
-    public UserDetailsService adminUserDetailsService() {
-        UserDetails admin = User.withUsername("admin@admin.com")
-                .password(passwordEncoder().encode("123456"))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin);
+    public UserDetailsService adminUserDetailsService(IProfissionalDAO profissionalDAO) {
+        return email -> {
+            var user = profissionalDAO.findByEmail(email);
+            if (user != null) {
+                return User.builder()
+                        .username(user.getEmail())
+                        .password(user.getPassword())
+                        .roles(user.getRole().replace("ROLE_", ""))
+                        .build();
+            } else {
+                throw new UsernameNotFoundException("Usuário não encontrado: " + email);
+            }
+        };
     }
-
     @Bean
     public DaoAuthenticationProvider adminAuthProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(adminUserDetailsService());
+        provider.setUserDetailsService(adminUserDetailsService(profissionalDAO));
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }

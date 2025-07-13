@@ -15,15 +15,24 @@
                 <th th:text="#{profissional.nome}">Nome</th>
                 <th th:text="#{profissional.email}">Email</th>
                 <th th:text="#{profissional.cpf}">CPF</th>
+                <th th:text="#{profissional.role}">Perfil</th>
+                <th th:text="#{profissional.telefone}">Telefone</th>
+                <th th:text="#{profissional.sexo}">Sexo</th>
+                <th th:text="#{profissional.dataNascimento}">Nascimento</th>
                 <th th:text="#{profissional.ativo}">Ativo</th>
                 <th th:text="#{acoes}">Ações</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="profissional : ${profissionais}">
+            <tr th:each="profissional : ${profissionais}"
+                th:if="${profissional.role} != 'ROLE_ADMIN'">
                 <td th:text="${profissional.nome}">Nome</td>
                 <td th:text="${profissional.email}">Email</td>
                 <td th:text="${profissional.cpf}">CPF</td>
+                <td th:text="${profissional.role}">Perfil</td>
+                <td th:text="${profissional.telefone}">Telefone</td>
+                <td th:text="${profissional.sexo}">Sexo</td>
+                <td th:text="${#temporals.format(profissional.dataNascimento, 'dd/MM/yyyy')}"> Data de Nascimento</td>
 
                 <td>
                     <span th:if="${profissional.enabled}" th:text="#{sim}">Sim</span>

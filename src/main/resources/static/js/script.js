@@ -11,3 +11,13 @@ function mostraForm(tipo)
         formEmpresa.style.display = "block";
     }
 }
+
+function toggleEntrevistaFields(select) {
+    var candidaturaId = select.id.split('-')[1];
+    var fields = document.getElementById('entrevista-fields-' + candidaturaId);
+    if (select.value === 'ENTREVISTA') {
+        fields.style.display = 'block';
+    } else {
+        fields.style.display = 'none';
+    }
+}

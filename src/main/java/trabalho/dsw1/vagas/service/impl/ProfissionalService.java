@@ -36,4 +36,8 @@ public class ProfissionalService implements IProfissionalService {
     public Profissional findByEmail(String email) {
         return profissionalDAO.findByEmail(email);
     }
+
+    public boolean isEmpty() {
+        return profissionalDAO.isEmpty();
+    }
 }

@@ -20,4 +20,8 @@ public interface IProfissionalDAO extends CrudRepository<Profissional, Long>  {
     List<Profissional> findAll();
 
     Profissional findByEmail(String username);
+
+    default boolean isEmpty() {
+        return findAll().isEmpty();
+    }
 }

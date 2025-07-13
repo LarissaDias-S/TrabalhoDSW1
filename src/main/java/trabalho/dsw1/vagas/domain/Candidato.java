@@ -28,16 +28,16 @@ public class Candidato extends AbstractEntity<Long> {
 
     @NotBlank(message = "O status é obrigatório")
     @Size(max = 64, message = "O status deve ter no máximo 64 caracteres")
-    @Pattern(regexp = "Ativo|Inativo|Pendente", message = "Status inválido")
+    @Pattern(regexp = "ABERTO|NAO_SELECIONADO|ENTREVISTA", message = "Status inválido")
     @Column(nullable = false, length = 64)
-    private String status = "Ativo";
+    private String status = "ABERTO";
 
     @Size(max = 256, message = "O link da entrevista deve ter no máximo 256 caracteres")
     @Pattern(regexp = "^(https?://.*)?$", message = "Link da entrevista deve ser uma URL válida")
     @Column(length = 256)
     private String linkEntrevista;
 
-    @PastOrPresent(message = "A data/hora da entrevista deve ser no passado ou presente")
+    @FutureOrPresent(message = "A data/hora da entrevista deve ser no futuro ou presente")
     @Column(nullable = true)
     private LocalDateTime dataHoraEntrevista;
     

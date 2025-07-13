@@ -39,6 +39,20 @@
                         <label th:text="#{register.passwordLabel}">Senha:</label>
                         <input type="password" id="passwordProfissional" name="password" th:placeholder="#{register.passwordPlaceholder}" required />
 
+                        <label th:text="#{profissional.telefone}">Telefone:</label>
+                        <input type="text" id="telefoneProfissional" name="telefone" placeholder="(11) 91234-5678" required />
+
+                        <label th:text="#{profissional.sexo}">Sexo:</label>
+                        <select id="sexoProfissional" name="sexo" required>
+                            <option value="" th:text="#{select.selecione}">Selecione</option>
+                            <option value="M" th:text="'Masculino'">Masculino</option>
+                            <option value="F" th:text="'Feminino'">Feminino</option>
+                            <option value="OUTRO" th:text="'Outro'">Outro</option>
+                        </select>
+
+                        <label th:text="#{profissional.dataNascimento}">Data de Nascimento:</label>
+                        <input type="date" id="dataNascimentoProfissional" name="dataNascimento" required />
+
                         <input type="hidden" name="role" value="ROLE_PROFISSIONAL" />
                         <input type="hidden" name="enabled" value="true" />
 

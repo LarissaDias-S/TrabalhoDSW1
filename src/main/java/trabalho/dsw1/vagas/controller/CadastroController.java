@@ -9,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model; // Importe Model
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError; // Importe ObjectError
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -61,11 +60,11 @@ public class CadastroController {
         if ("empresa".equals(tipo)) {
             // A validação @Valid já preencheu empresaBindingResult
             // Verificações de unicidade adicionais
-            if (empresaRepository.findByEmail(empresa.getEmail()) != null) {
-                empresaBindingResult.rejectValue("email", "error.empresa.email"); // Usar apenas a chave
+            if (empresaRepository.findByEmail(empresa.getEmail()).isPresent()) {
+                empresaBindingResult.rejectValue("email", "error.empresa.email");
             }
-            if (empresaRepository.findByCnpj(empresa.getCnpj()) != null) {
-                empresaBindingResult.rejectValue("cnpj", "error.empresa.cnpj"); // Usar apenas a chave
+            if (empresaRepository.findByCnpj(empresa.getCnpj()).isPresent()) {
+                empresaBindingResult.rejectValue("cnpj", "error.empresa.cnpj");
             }
 
             if (empresaBindingResult.hasErrors()) {
