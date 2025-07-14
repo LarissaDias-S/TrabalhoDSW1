@@ -1,4 +1,5 @@
 package trabalho.dsw1.vagas.repository;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,5 @@ import trabalho.dsw1.vagas.domain.Empresa;
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     Optional<Empresa> findByEmail(String email);
     Optional<Empresa> findByCnpj(String cnpj); 
+    List<Empresa> findEmpresasByCidade(String cidade);
 }

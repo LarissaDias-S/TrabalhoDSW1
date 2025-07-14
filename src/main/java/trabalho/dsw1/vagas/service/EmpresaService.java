@@ -33,4 +33,8 @@ public class EmpresaService {
     public void deleteEmpresa(Long id) {
         empresaRepository.deleteById(id);
     }
+
+    public List<Empresa> findEmpresasByCidade(String cidade) {
+        return empresaRepository.findEmpresasByCidade(cidade);
+    }
 }

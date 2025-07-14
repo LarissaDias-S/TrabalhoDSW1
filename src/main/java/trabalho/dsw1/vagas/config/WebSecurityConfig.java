@@ -93,6 +93,7 @@ public class WebSecurityConfig {
    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/api/**").permitAll()
             .requestMatchers("/admin/**").hasRole("ADMIN")
             .requestMatchers("/empresa/**").hasRole("EMPRESA")
             .requestMatchers("/profissionais/**").hasRole("PROFISSIONAL")
@@ -102,8 +103,8 @@ public class WebSecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .formLogin(form -> form
             .loginPage("/login")
-            .defaultSuccessUrl("/", true) // Redireciona sempre para home após login
-            .failureUrl("/login?error=true") // Parâmetro para mostrar erro
+            .defaultSuccessUrl("/", true)
+            .failureUrl("/login?error=true")
             .permitAll()
         )
         .logout(logout -> logout
